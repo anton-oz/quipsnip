@@ -1,2 +1,3 @@
-# slides
-simple app to make nice looking slides
+# Slides
+
+Pre-styled slideshow creator
