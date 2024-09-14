@@ -1,29 +1,23 @@
 # TODO
 
-## for MVP ( only host on local host, non-persistant )
+## for MVP
 
-### ** slideshow page ** 
+### client
 
-- start with a neo-brutalism style, add more as the project progresses
+- style app
 
--  
+- set up pwa
 
-## complete these others if you want a consumer facing app
+- pwa saves data to idb when offline, syncs up when back online and clears unneccesary data when sync is complete
 
-### landing page
-
-- two columns, right side option to log in or sign up, left side option to create new slideshow (if not logged in save slideshow to localstorage, maybe indexDB)
-
-### sign up / login page
+- Graphql
 
 - JWT auth
 
-- 
+### server
 
-### express server 
+- when user is connected to server, store data in mongodb
 
-- connect to MongoDB 
-
-- connect to GraphQL
+- Graphql
 
 - JWT auth
