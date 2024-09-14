@@ -7,7 +7,12 @@ const config: Partial<VitePWAOptions> = {
   devOptions: {
     enabled: false,
   },
-  // set up manifest
+  manifest: {
+    /* 
+      TODO: FINISH CONFIG
+    */
+    theme_color: "#599beb",
+  },
 };
 
 // https://vitejs.dev/config/
@@ -15,5 +20,6 @@ export default defineConfig({
   plugins: [react(), VitePWA(config)],
   server: {
     port: 3000,
+    open: true,
   },
 });
