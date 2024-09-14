@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "cd client && pnpm i && cd ../server && pnpm i",
-    "dev": "concurrently \"cd server && pnpm dev\" \"cd client && pnpm dev\"",
     "client:dev": "cd client && pnpm dev",
     "client:serve": "cd client && pnpm serve",
-    "server": "cd server && pnpm dev"
+    "server:dev": "cd server && direnv exec ./ uvicorn main:app --host 0.0.0.0 --port 3001",
+    "dev": "concurrently \"pnpm client:dev\" \"pnpm server:dev\""
   },
   "keywords": [],
   "author": "",

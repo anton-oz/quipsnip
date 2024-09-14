@@ -27,6 +27,8 @@
 
 ### server
 
+- set up spring boot graphql api
+
 - when user is connected to server, store data in mongodb
 
 - Graphql

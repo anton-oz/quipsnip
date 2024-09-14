@@ -7,6 +7,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# python stuff
+.venv
+__pycache__
+.envrc
+
 .DS_Store
 node_modules
 dist
