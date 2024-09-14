@@ -7,11 +7,30 @@ const config: Partial<VitePWAOptions> = {
   devOptions: {
     enabled: false,
   },
+  includeAssets: ["**/*"], // caches everything, change if neccesary
   manifest: {
-    /* 
-      TODO: FINISH CONFIG
-    */
+    name: "slides",
+    short_name: "Sl",
+    description: "new age notes",
     theme_color: "#599beb",
+    icons: [
+      {
+        src: "/pwa-64x64.png",
+        sizes: "64x64",
+        type: "image/png",
+      },
+      {
+        src: "/pwa-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        src: "/pwa-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
+      },
+    ],
   },
 };
 

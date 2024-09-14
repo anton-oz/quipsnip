@@ -1,9 +1,4 @@
-function App() {
-  return (
-    <main className="h-screen w-screen grid items-center place-items-center">
-      <img src="/s-logo.svg" width={200} />
-    </main>
-  );
+import { Outlet } from "react-router-dom";
+export default function App() {
+  return <Outlet />;
 }
-
-export default App;
