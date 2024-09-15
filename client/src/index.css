@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.brutalButton {
+  @apply absolute right-4 p-1 rounded-md bg-white text-black shadow-brutal hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-100;
+}
+
+.create {
+  @apply -right-12 border-[3px];
+}
+
+.form {
+  @apply -right-6;
+}
+
+.text-gradient {
+  background: linear-gradient(45deg, #599beb, #6059eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* For modern browsers */
+  text-fill-color: transparent;
+}
+
+:root {
+  --bg: #9dc4f3;
+  --grad: linear-gradient(45deg, #599beb, #6059eb);
+}
+
+html {
+  background-color: black;
+  color: white;
+}
