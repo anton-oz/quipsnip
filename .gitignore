@@ -11,6 +11,7 @@ lerna-debug.log*
 .venv
 __pycache__
 .envrc
+*.pem
 
 .DS_Store
 node_modules

@@ -4,8 +4,9 @@ import { Ellipsis } from "lucide-react";
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navLinks = ["Create", "Sign up", "Login", "Support Creator"];
-  const logoDim = 40;
+  // const navLinks = ["Create", "Sign up", "Login", "Support Creator"];
+  const navLinks = ["Sign up", "Support Creator"];
+  const logoDim = 60;
 
   const menuOnClick = () => {
     setMenuOpen(!menuOpen);
@@ -20,7 +21,7 @@ export default function Nav() {
     <nav className="w-full px-12 py-6 flex justify-between items-center">
       <a href="/" className="hover:scale-105 transition-all duration-150">
         <img
-          src="/s-logo.svg"
+          src="/nan-logo.svg"
           width={logoDim}
           height={logoDim}
           alt="slides logo"

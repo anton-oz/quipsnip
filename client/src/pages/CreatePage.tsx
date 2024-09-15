@@ -1,3 +1,9 @@
+import NoteTextArea from "../components/NoteTextArea";
+
 export default function CreatePage() {
-  return <h1>Create Page</h1>;
+  return (
+    <section className="h-[70%] w-full flex justify-center items-center">
+      <NoteTextArea />
+    </section>
+  );
 }

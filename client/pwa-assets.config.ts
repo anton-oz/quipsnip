@@ -5,5 +5,5 @@ import {
 
 export default defineConfig({
   preset,
-  images: ["public/s-logo.svg"],
+  images: ["public/nan-logo.svg"],
 });
