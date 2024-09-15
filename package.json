@@ -9,7 +9,7 @@
     "client:dev": "cd client && pnpm dev",
     "client:build": "cd client && pnpm build",
     "client:serve": "cd client && pnpm serve",
-    "server:dev": "cd server && direnv exec ./ uvicorn main:app --host 0.0.0.0 --port 3001",
+    "server:dev": "cd server && direnv exec ./ uvicorn main:app --reload --port 3001",
     "dev": "concurrently \"pnpm client:dev\" \"pnpm server:dev\""
   },
   "keywords": [],
