@@ -13,7 +13,7 @@ export default function Nav() {
   };
 
   const stringToLink = (linkName: string) => {
-    let link = linkName.toLocaleLowerCase();
+    const link = linkName.toLocaleLowerCase();
     return link.replace(/\s+/g, "");
   };
 

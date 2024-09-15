@@ -15,7 +15,7 @@ app = FastAPI()
 # Allow CORS for the specific frontend (localhost:3000)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # You can also allow multiple origins here
+    allow_origins=["http://localhost:3000", 'https://localhost:3001'],  # You can also allow multiple origins here
     allow_credentials=True,
     allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
     allow_headers=["*"],  # Allow all headers
@@ -35,19 +35,22 @@ schema = strawberry.Schema(Query)
 graphql_app = GraphQLRouter(schema)
 ##
 
-
-clientDist = Path(__file__).parent.parent / "client" / "dist"
-
-# Serves static directory
-# app.mount("/", StaticFiles(directory=clientDist, html=True), name="dist")
-
 # GraphQL endpoint
 app.include_router(graphql_app, prefix="/graphql")
+
+# === Serve Static Files ===
+client_dist_path = Path(__file__).parent.parent / 'client' / 'dist'
+app.mount("/", StaticFiles(directory=client_dist_path), name="static")
+
+# === Catch-All Route for Serving index.html ===
+# @app.get("/{full_path:path}")
+# async def serve_spa(full_path: str):
+#     return FileResponse(client_dist_path / "index.html")
 
 # spins up local server @ localhost:3001
 if __name__ == "__main__":
     uvicorn.run("main:app", 
                 reload=True,
-                port=3001,
-                ssl_keyfile="./localhost-key.pem",
-                ssl_certfile="./localhost.pem")
+                port=3001)
+                # ssl_keyfile="./localhost-key.pem",
+                # ssl_certfile="./localhost.pem")
