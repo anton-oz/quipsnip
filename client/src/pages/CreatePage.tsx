@@ -4,7 +4,8 @@ import { HELLO_QUERY } from "../utils/queries";
 import { useEffect } from "react";
 
 export default function CreatePage() {
-  const { loading, error, data } = useQuery(HELLO_QUERY);
+  // const { loading, error, data } = useQuery(HELLO_QUERY);
+  const { data } = useQuery(HELLO_QUERY);
 
   useEffect(() => {
     data ? console.log(data) : "invalid";
