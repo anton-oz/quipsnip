@@ -5,7 +5,7 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // const navLinks = ["Create", "Sign up", "Login", "Support Creator"];
-  const navLinks = ["Sign up", "Support Creator"];
+  const navLinks = ["About", "Sign up", "Support Creator"];
   const logoDim = 60;
 
   const menuOnClick = () => {
