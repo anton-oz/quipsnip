@@ -1,41 +1,15 @@
 # TODO
 
-## for MVP
+### name ideas
 
-- RESTYLE LOGO
+- QuipSnip
 
-- NAME PIVOT TO NaN - New Age Notes
+### ui ideas
 
-### client
+- have the gradient text on landing page swap with a rotary animation between Question, Comment, and Answer.
 
-- style app
+### App function
 
-  - landing page
+- code snippet sharing site, similar to stackoverflow but a leaner simplified version w/ new age styling
 
-    - split in two columns, on left you can skip to slide builder, on right you can login or sign up
-
-  - slide builder ( main product ) <-- ** FOCUS **
-
-  - login page
-
-  - signup page
-
-- set up pwa
-
-- pwa saves data to idb when offline, syncs up when back online and clears unneccesary data when sync is complete
-
-- Graphql
-
-- JWT auth
-
-### server
-
-- ~~set up spring boot graphql api~~
-
-- going with FastAPI ( python )
-
-- when user is connected to server, store data in mongodb
-
-- Graphql
-
-- JWT auth
+- After MVP complete add more ideas here
