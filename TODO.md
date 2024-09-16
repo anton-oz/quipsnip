@@ -1,14 +1,12 @@
 # TODO
 
-## PIVOT 
-
-- remove pwa packages and config files, switching to basic web app
-
-- switch backend to node / express, FastAPI not working out for this use case + want to get MVP quicker
-
 ### name ideas
 
 - QuipSnip
+
+### ui ideas
+
+- have the gradient text on landing page swap with a rotary animation between Question, Comment, and Answer.
 
 ### App function
 

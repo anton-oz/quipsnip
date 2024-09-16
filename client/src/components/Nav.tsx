@@ -19,13 +19,14 @@ export default function Nav() {
 
   return (
     <nav className="w-full px-12 py-6 flex justify-between items-center">
-      <a href="/" className="hover:scale-105 transition-all duration-150">
+      <a href="/" className="transition-all duration-200">
         <img
           src="/nan-logo.svg"
           width={logoDim}
           height={logoDim}
           alt="slides logo"
         />
+        QuipSnip
       </a>
       <div className="flex flex-col justify-start items-center overflow-hidden">
         <button onClick={menuOnClick}>
