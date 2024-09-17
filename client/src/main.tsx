@@ -4,7 +4,9 @@ import App from "./App.tsx";
 import "./index.css";
 
 import LandingPage from "./pages/LandingPage.tsx";
-import CreatePage from "./pages/CreatePage.tsx";
+import SignupPage from "./pages/SignupPage.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import DashboardPage from "./pages/DashboardPage.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 
 const router = createBrowserRouter([
@@ -18,8 +20,16 @@ const router = createBrowserRouter([
         element: <LandingPage />,
       },
       {
-        path: "create",
-        element: <CreatePage />,
+        path: "signup",
+        element: <SignupPage />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "dashboard",
+        element: <DashboardPage />,
       },
       /* ADD MORE ROUTES */
     ],

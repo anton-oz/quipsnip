@@ -21,32 +21,50 @@ export default function LoginForm() {
     setFormState({ username: "", password: "" });
   };
   return (
-    <div className="mt-40 py-14 px-8 flex flex-col items-center justify-center border-2 border-black rounded-md">
+    <div className="h-fit w-fit mt-14 px-8 py-6 gap-4 flex flex-col items-center justify-center border-2 border-gray-500 rounded-md bg-bgSecondary">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center gap-3 text-xl"
       >
-        <h2 className="text-4xl">Login</h2>
+        {/* <h2 className="text-4xl">Login</h2> */}
+        <label htmlFor="username" className="w-full text-left">
+          Username
+        </label>
         <input
           name="username"
           value={formState.username}
           onChange={handleChange}
           type="text"
           placeholder="username"
-          className="p-2 border-2 border-black rounded-md"
+          className="w-80 p-2 border-2 border-white rounded-md text-black focus:outline-none hover:shadow-mainSecondary hover:shadow-lg transition-all duration-200"
         />
+        <label htmlFor="password" className="w-full text-left">
+          Password
+        </label>
         <input
           name="password"
           value={formState.password}
           onChange={handleChange}
           type="password"
           placeholder="password"
-          className="p-2 border-2 border-black rounded-md"
+          className="w-80 p-2 border-2 border-white rounded-md text-black focus:outline-none  hover:shadow-mainSecondary hover:shadow-lg transition-all duration-200"
         />
-        <button type="submit" className="relative">
-          <span className="brutalButton form">login</span>
+        <button
+          type="submit"
+          className="py-2 px-4 border-2 border-white rounded-md bg-black hover:bg-white hover:text-black transition-all duration-100"
+        >
+          Login
         </button>
       </form>
+      <p className="w-full text-left">
+        No Account?{" "}
+        <a
+          href="/signup"
+          className="underline underline-offset-2 hover:underline-offset-1 hover:text-main transition-all duration-200"
+        >
+          Signup
+        </a>
+      </p>
     </div>
   );
 }

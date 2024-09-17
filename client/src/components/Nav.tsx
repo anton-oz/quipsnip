@@ -40,10 +40,10 @@ export default function Nav() {
           />
         </button>
         {menuOpen ? (
-          <ul className="w-48 h-full p-2 absolute right-0 top-20 gap-12 flex flex-col items-center justify-start animate-slideIn">
+          <ul className="w-48 h-[9.33rem]  p-2 absolute right-3 top-[5.5rem] gap-12 flex flex-col items-center justify-start animate-slideIn bg-white bg-opacity-65 rounded-lg">
             {navLinks.map((link, i) => (
               <li key={i} className="relative w-full">
-                <a href={stringToLink(link)} className="brutalButton">
+                <a href={stringToLink(link)} className="brutalButton ">
                   {link}
                 </a>
               </li>

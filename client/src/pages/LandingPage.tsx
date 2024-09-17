@@ -1,31 +1,23 @@
-/*
-        UNCOMMENT WHEN LOGIN IMPLEMENTED
-*/
-// import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/LoginForm";
 
 export default function LandingPage() {
   return (
-    /*
-                UNCOMMENT WHEN LOGIN IMPLEMENTED 
-      */
-    /* <main className="w-screen h-screen grid grid-cols-2"> */
-    <section className="flex flex-col justify-start items-center">
-      <div className="mt-40 px-12 py-16 flex flex-col items-center justify-center rounded-xl">
+    <section className="grid grid-cols-2 items-center place-items-center">
+      <div className=" px-12 py-16 flex flex-col items-center justify-center rounded-xl">
         <h1 className="text-7xl font-semibold ">
-          Have a <span className="text-gradient">Question?</span>
+          {/* 
+                                ADD comment, answer cycling in the span below        
+          */}
+          Have a <span className="text-gradient">Question</span>?
         </h1>
-        <a href="/create" className="relative h-full m-4 ">
+        <p className="pt-5 text-gray-300">Log in or Sign up to get started!</p>
+        {/* <a href="/create" className="relative h-full m-4 ">
           <span className="brutalButton create text-4xl font-bold w-max">
-            Get Started
+            Sign Up
           </span>
-        </a>
+        </a> */}
       </div>
+      <LoginForm />
     </section>
-    /* 
-                UNCOMMENT WHEN LOGIN IMPLEMENTED
-        */
-    /* <section className="flex flex-col justify-start items-center">
-          <LoginForm />
-        </section> */
   );
 }

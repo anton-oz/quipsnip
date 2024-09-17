@@ -16,7 +16,9 @@ export default function App() {
       <main className="w-screen h-screen">
         <Outlet />
       </main>
-      <footer></footer>
+      <footer className="text-white bottom-0">
+        <p>footer</p>
+      </footer>
     </ApolloProvider>
   );
 }
