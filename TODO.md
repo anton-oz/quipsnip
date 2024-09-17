@@ -4,7 +4,17 @@
 
 - QuipSnip
 
+### color hexs
+
+main: #599beb
+mainSecondary: #6059eb
+
+bg: #1a1f23
+bgSecondary: #262d33
+
 ### ui ideas
+
+- make sure things look good on mobile during initial development
 
 - have the gradient text on landing page swap with a rotary animation between Question, Comment, and Answer.
 

@@ -1,9 +1,9 @@
-import NoteTextArea from "../components/NoteTextArea";
+import CodeForm from "../components/CodeForm";
 
 export default function DashboardPage() {
   return (
     <section className="h-[70%] w-full flex justify-center items-center">
-      <NoteTextArea />
+      <CodeForm />
     </section>
   );
 }
