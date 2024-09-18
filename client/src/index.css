@@ -13,7 +13,7 @@
 }
 
 .form {
-  @apply -right-6;
+  @apply right-[8.5rem] mt-4;
 }
 
 :root {

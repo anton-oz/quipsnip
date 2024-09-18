@@ -27,7 +27,7 @@ export default function MyCodeEditor({ hidden, lang }: Props) {
   const styles = {
     display: hidden ? "none" : "block",
     width: "50rem",
-    height: "30rem",
+    height: "25rem",
     border: "3px solid white",
     borderRadius: "1rem",
   };
@@ -40,7 +40,7 @@ export default function MyCodeEditor({ hidden, lang }: Props) {
     <Editor
       language={lang}
       wordWrap
-      value="const foo = 'bar';"
+      value="// enter your code here"
       textareaProps={{
         placeholder: "Enter your code",
         name: "editor",
