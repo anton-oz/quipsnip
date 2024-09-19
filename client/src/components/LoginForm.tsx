@@ -36,7 +36,7 @@ export default function LoginForm() {
           onChange={handleChange}
           type="text"
           placeholder="username"
-          className="w-80 p-2 border-2 border-white rounded-md text-black focus:outline-none hover:shadow-mainSecondary hover:shadow-lg transition-all duration-200"
+          className="w-80 p-2 border-2 border-white rounded-md text-black focus:outline-none hover:scale-[1.025] transition-all duration-200"
         />
         <label htmlFor="password" className="w-full text-left">
           Password
@@ -47,7 +47,7 @@ export default function LoginForm() {
           onChange={handleChange}
           type="password"
           placeholder="password"
-          className="w-80 p-2 border-2 border-white rounded-md text-black focus:outline-none  hover:shadow-mainSecondary hover:shadow-lg transition-all duration-200"
+          className="w-80 p-2 border-2 border-white rounded-md text-black focus:outline-none  hover:scale-[1.025] transition-all duration-200"
         />
         <button
           type="submit"

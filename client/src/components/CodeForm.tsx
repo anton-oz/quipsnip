@@ -2,20 +2,15 @@ import { FormEvent, ChangeEvent, useState, useEffect } from "react";
 import MyCodeEditor from "./MyCodeEditor";
 
 export default function CodeForm() {
-  const [hideCodeEditor, setHideCodeEditor] = useState(true);
-  const [selectedType, setSelectedType] = useState("");
+  const [hideCodeEditor, setHideCodeEditor] = useState(false);
   const [allowSubmit, setAllowSubmit] = useState(false);
   const [formState, setFormState] = useState({
-    type: "",
+    type: "question",
     postTitle: "",
-    code: "",
+    editor: "",
   });
 
   const postTypes = ["Question", "Snippet"];
-
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedType(e.target.value);
-  };
 
   const handleFormChange = (e: ChangeEvent<HTMLFormElement>) => {
     const { name, value } = e.target;
@@ -37,37 +32,36 @@ export default function CodeForm() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (e.currentTarget !== null) {
-      const data = new FormData(e.currentTarget);
-      console.log(data.get("editor"));
+    // if (e.currentTarget !== null) {
+    //   const data = new FormData(e.currentTarget);
+    //   console.log(data.get("editor"));
+    //   console.log(formState);
+    // }
+    if (formState.editor && formState.postTitle && formState.type) {
       console.log(formState);
-    }
-    setFormState({
-      type: "",
-      postTitle: "",
-      code: "",
-    });
-  };
 
-  useEffect(() => {
-    selectedType === "" ? setHideCodeEditor(true) : setHideCodeEditor(false);
-  }, [selectedType]);
+      setFormState({
+        type: "",
+        postTitle: "",
+        editor: "",
+      });
+    }
+    alert("fill out all fields");
+  };
 
   return (
     <form
       onSubmit={handleSubmit}
       onChange={handleFormChange}
-      className="gap-2 flex flex-col xl:flex-row items-center justify-center"
+      className="gap-2 flex flex-col lg:flex-row items-center justify-center"
     >
       <div className="flex flex-col justify-center items-center">
         <h2 className="p-2 text-3xl">New Post</h2>
         <select
           className="p-1 rounded-md text-black focus:outline-none hover:scale-[1.025] transition-all duration-150"
-          value={formState.type}
+          defaultValue={formState.type}
           name="type"
-          onChange={handleChange}
         >
-          <option value="">Select an option</option>
           {postTypes.map((item, i) => (
             <option value={item.toLocaleLowerCase()} key={i}>
               {item}
@@ -102,7 +96,9 @@ export default function CodeForm() {
           )}
         </div>
       </div>
-      <MyCodeEditor hidden={hideCodeEditor} lang="jsx" />
+      <div className="w-[80vw] lg:w-[50vw]">
+        <MyCodeEditor hidden={hideCodeEditor} lang="jsx" />
+      </div>
     </form>
   );
 }

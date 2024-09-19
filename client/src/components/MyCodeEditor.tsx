@@ -16,7 +16,6 @@ import "prism-react-editor/themes/vs-code-dark.css";
 
 // Required by the basic setup
 import "prism-react-editor/search.css";
-import { useEffect } from "react";
 
 interface Props {
   hidden: boolean;
@@ -26,15 +25,12 @@ interface Props {
 export default function MyCodeEditor({ hidden, lang }: Props) {
   const styles = {
     display: hidden ? "none" : "block",
-    width: "50rem",
-    height: "25rem",
+    width: "100%",
+    height: "50vh",
     border: "3px solid white",
     borderRadius: "1rem",
+    class: "brutalButton",
   };
-
-  useEffect(() => {
-    console.log(hidden);
-  }, [hidden]);
 
   return (
     <Editor
