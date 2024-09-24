@@ -5,11 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "serve": "PORT=4433 serve ./dist",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "gen-icons": "pwa-assets-generator"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",

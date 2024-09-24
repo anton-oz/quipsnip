@@ -1,10 +1,16 @@
 import { useState, FormEvent, ChangeEvent } from "react";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+
+import Auth from "../utils/auth";
 
 export default function LoginForm() {
   const [formState, setFormState] = useState({
     username: "",
     password: "",
   });
+
+  const [login, { error }] = useMutation(LOGIN_USER);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -15,9 +21,19 @@ export default function LoginForm() {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formState);
+    const x = JSON.stringify({ ...formState });
+    try {
+      console.log("data sent to graphql: ", x);
+      const { data } = await login({
+        variables: { ...formState },
+      });
+      if (error) throw error;
+      Auth.login(data.login.token);
+    } catch (err) {
+      console.error("thrown: ", err);
+    }
     setFormState({ username: "", password: "" });
   };
   return (

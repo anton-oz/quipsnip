@@ -8,7 +8,11 @@
     "install": "cd client && pnpm i && cd ../server && pnpm i",
     "client:dev": "cd client && pnpm dev",
     "client:build": "cd client && pnpm build",
+    "client:start": "cd client && vite preview",
     "server:dev": "cd server && pnpm dev",
+    "server:build": "cd server && pnpm build",
+    "server:start": "cd server && pnpm start",
+    "start": "concurrently \"pnpm client:start\" \"pnpm server:start\"",
     "dev": "concurrently \"pnpm client:dev\" \"pnpm server:dev\""
   },
   "keywords": [],
