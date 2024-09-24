@@ -20,11 +20,10 @@ const resolvers = {
     ) => {
       // look for profile in db by provided username
       const profile = await Profile.findOne({ username });
-      // check if profile exists
-      if (!profile) throw AuthenticationError;
+      if (!profile) return AuthenticationError;
       // checks if password matches
-      const pswd = profile.passwordMatch(password);
-      if (!pswd) throw AuthenticationError;
+      const pswd = await profile.passwordMatch(password);
+      if (!pswd) return AuthenticationError;
       // if it gets here authentication has completed, so a jwt token is signed
       const token = signToken({
         username: profile.username,

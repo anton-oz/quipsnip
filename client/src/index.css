@@ -8,6 +8,14 @@
   @apply absolute right-4 p-1 border-white rounded-md bg-white text-black shadow-brutal hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-100;
 }
 
+.brutalButtonMainLinks {
+  @apply absolute right-0 left-0 p-1 border-white rounded-md bg-white text-black shadow-brutal hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-100;
+}
+
+.brutalButtonMiddle {
+  @apply absolute right-[48%] p-1 border-white rounded-md bg-white text-black shadow-brutal hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-100;
+}
+
 .create {
   @apply -right-20 border-[3px] duration-200;
 }

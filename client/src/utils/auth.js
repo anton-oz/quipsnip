@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 
 class AuthService {
   getProfile() {
-    return decode(this.getToken());
+    return jwtDecode(this.getToken());
   }
 
   loggedIn() {
@@ -12,7 +12,7 @@ class AuthService {
   }
 
   isTokenExpired(token) {
-    const decoded = decode(token);
+    const decoded = jwtDecode(token);
     if (decoded.exp < Date.now() / 1000) {
       localStorage.removeItem("id_token");
       return true;
@@ -24,14 +24,14 @@ class AuthService {
     return localStorage.getItem("id_token");
   }
 
-  login(idToken) {
-    localStorage.setItem("id_token", idToken);
-    window.location.assign("/");
+  login(token) {
+    localStorage.setItem("id_token", token);
+    window.location.assign("/dashboard");
   }
 
   logout() {
     localStorage.removeItem("id_token");
-    window.location.reload();
+    window.location.assign("/");
   }
 }
 

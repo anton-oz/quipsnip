@@ -26,9 +26,9 @@ export default function MyCodeEditor({ hidden, lang }: Props) {
   const styles = {
     display: hidden ? "none" : "block",
     width: "100%",
-    height: "50vh",
-    border: "3px solid white",
-    borderRadius: "1rem",
+    height: "100%",
+    // borderRadius: "0.25rem",
+    backgroundColor: "black",
     class: "brutalButton",
   };
 

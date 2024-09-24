@@ -5,7 +5,7 @@ import { ObjectId } from "mongoose";
 import { Request, Response, NextFunction } from "express";
 
 const secret = process.env.SECRET || "frigofflahey";
-const expiration = "15";
+const expiration = "15m"; 
 
 export interface CustomRequest extends Request {
   token: string | JwtPayload;

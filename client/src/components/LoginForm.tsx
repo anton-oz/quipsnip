@@ -24,15 +24,22 @@ export default function LoginForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const x = JSON.stringify({ ...formState });
-    try {
-      console.log("data sent to graphql: ", x);
-      const { data } = await login({
-        variables: { ...formState },
-      });
-      if (error) throw error;
-      Auth.login(data.login.token);
-    } catch (err) {
-      console.error("thrown: ", err);
+
+    if (formState.username && formState.password) {
+      try {
+        console.log("data sent to graphql: ", x);
+        const { data } = await login({
+          variables: { ...formState },
+        });
+        if (error) return error;
+        console.log("here", data);
+        Auth.login(data.login.token);
+        // window.location.replace("/dashboard");
+      } catch (err) {
+        console.error("thrown: ", err);
+      }
+    } else {
+      return alert("fill out both fields");
     }
     setFormState({ username: "", password: "" });
   };

@@ -1,13 +1,10 @@
 export default class AuthService {
-  static login(token: any) {
-    throw new Error("Method not implemented.");
-  }
-  getProfile(): string;
-  loggedIn(): [ObjectId, boolean];
-  isTokenExpired(token: string): boolean;
-  getToken(): string | null;
-  login(idToken: ObjectId): void;
-  logout(): void;
+  static getProfile(): string;
+  static loggedIn(): boolean;
+  static isTokenExpired(token: string): boolean;
+  static getToken(): string | null;
+  static login(idToken: string): void;
+  static logout(): void;
 }
 
 // declare module "./auth"

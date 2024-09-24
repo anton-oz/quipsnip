@@ -1,8 +1,8 @@
-import { FormEvent, ChangeEvent, useState, useEffect } from "react";
+import { FormEvent, ChangeEvent, useState } from "react";
 import MyCodeEditor from "./MyCodeEditor";
 
 export default function CodeForm() {
-  const [hideCodeEditor, setHideCodeEditor] = useState(false);
+  const [hideCodeEditor] = useState(false);
   const [allowSubmit, setAllowSubmit] = useState(false);
   const [formState, setFormState] = useState({
     type: "question",
@@ -53,9 +53,9 @@ export default function CodeForm() {
     <form
       onSubmit={handleSubmit}
       onChange={handleFormChange}
-      className="gap-2 flex flex-col lg:flex-row items-center justify-center"
+      className="gap-2 flex flex-col items-center justify-center"
     >
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex justify-center items-center">
         <h2 className="p-2 text-3xl">New Post</h2>
         <select
           className="p-1 rounded-md text-black focus:outline-none hover:scale-[1.025] transition-all duration-150"
@@ -96,7 +96,7 @@ export default function CodeForm() {
           )}
         </div>
       </div>
-      <div className="w-[80vw] lg:w-[50vw]">
+      <div className="w-[100vw] h-[60vh] lg:w-[100vw]">
         <MyCodeEditor hidden={hideCodeEditor} lang="jsx" />
       </div>
     </form>
