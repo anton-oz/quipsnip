@@ -1,3 +1,4 @@
 import Profile from "./profile";
+import Post from "./post";
 
-export { Profile };
+export { Profile, Post };

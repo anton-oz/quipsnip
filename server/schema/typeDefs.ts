@@ -2,8 +2,8 @@ const typeDefs = `#graphql
 
     type Profile {
         _id: ID!
-        username: String 
-        password: String
+        username: String!
+        password: String!
     }
 
     type Auth {
@@ -11,10 +11,25 @@ const typeDefs = `#graphql
         profile: Profile
     }
 
+    type Post {
+        _id: ID!
+        user: Profile
+        type: String!
+        title: String!
+        code: String!
+        comments: [Comment]
+    }
+
+    type Comment {
+        _id: ID!
+        text: String!
+        user: Profile!
+    }
+
     type Query {
         profile(username: String!): Profile
         profiles: [Profile]!
-        hello: String
+        posts: [Post]
     }
 
     type Mutation {

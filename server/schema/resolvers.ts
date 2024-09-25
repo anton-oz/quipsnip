@@ -1,17 +1,35 @@
-import { Profile } from "../models";
+import { ObjectId } from "mongoose";
+import { Post, Profile } from "../models";
 
 import auth from "../utils/auth";
 const { AuthenticationError, signToken } = auth;
 
 const resolvers = {
   Query: {
-    hello: () => "hello",
     profiles: async () => {
       return Profile.find();
     },
-    profile: async (_: void, { username }: { username: string }) => {
-      return Profile.findOne({ username });
+    profile: async (_: void, { _id }: { _id: ObjectId }) => {
+      return Profile.findOne({ _id });
     },
+    posts: async () => {
+      try {
+        const posts = await Post.find()
+          .populate("user")
+          // populate user in sub documents
+          .populate({
+            path: "comments",
+            populate: { path: "user", model: "Profile" },
+          });
+        if (!posts) return { error: "no posts" };
+        return posts;
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    // comments: async () => {
+
+    // }
   },
   Mutation: {
     login: async (

@@ -8,7 +8,24 @@
 
 ### TODO FOR MVP
 
-- [ ] make main section containers respect the navbars space, be weary of breakpoints during development
+- [ ] post is saved to db with correct user
+
+- [ ] post renders in feed based on time posted, only show 10 most recent posts unless request more
+
+- [ ] sign up page
+
+- [ ] dedicated login page
+
+- [ ] make landing page able to see feed, but prompted to login
+
+- [ ] jwt refresh
+
+- [ ] comment on other posts
+
+- - [X] comment model in db
+
+- - [ ] can see comments on each post
+
 
 ### color hexs
 
@@ -19,6 +36,8 @@ bg: #1a1f23
 bgSecondary: #262d33
 
 ### ui ideas
+
+- use cuberto mouse follower, make the website feel like floating / fluid
 
 - make sure things look good on mobile during initial development
 

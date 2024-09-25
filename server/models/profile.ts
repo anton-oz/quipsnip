@@ -1,7 +1,7 @@
 import { Model, ObjectId, Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
-interface Profile {
+interface ProfileInterface {
   _id: ObjectId;
   username: string;
   password: string;
@@ -11,9 +11,13 @@ interface ProfileMethods {
   passwordMatch(password: string): boolean;
 }
 
-type ProfileModel = Model<Profile, {}, ProfileMethods>;
+type ProfileModel = Model<ProfileInterface, {}, ProfileMethods>;
 
-const profileSchema = new Schema<Profile, ProfileModel, ProfileMethods>({
+const profileSchema = new Schema<
+  ProfileInterface,
+  ProfileModel,
+  ProfileMethods
+>({
   username: {
     type: String,
     required: true,
