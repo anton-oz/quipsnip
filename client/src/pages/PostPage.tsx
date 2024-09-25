@@ -1,8 +1,8 @@
 import CodeForm from "../components/CodeForm";
 import Auth from "../utils/auth";
-export default function DashboardPage() {
+export default function PostPage() {
   return (
-    <section className="h-[70%] w-full flex justify-center items-center">
+    <section className="h-full w-full flex justify-center items-center">
       {Auth.loggedIn() ? (
         <CodeForm />
       ) : (

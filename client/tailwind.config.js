@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         main: "#599beb",
+        mainDarker: "#4177ba",
         mainSecondary: "#6059eb",
         bg: "#1a1f23",
         bgSecondary: "#262d33",
@@ -12,7 +13,7 @@ export default {
       },
       boxShadow: {
         brutal: "0.3em 0.3em 0 #6059eb",
-        brutalGreen: "0.3em 0.3em 0 #2af72a",
+        brutalGreen: "0.3em 0.3em 0 #29cf48",
       },
       keyframes: {
         slideIn: {

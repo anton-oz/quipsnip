@@ -14,7 +14,7 @@ export default function Nav() {
   const navLinks = loggedIn
     ? ["About", "Support Creator", "Logout"]
     : ["About", "Support Creator", "Sign up"];
-  const mainLinks = ["Dashboard", "Feed", "Profile"];
+  const mainLinks = ["Post", "Feed", "Profile"];
 
   const logoDim = 60;
 
@@ -32,7 +32,7 @@ export default function Nav() {
   };
 
   return (
-    <nav className="w-full px-12 py-6 flex justify-between items-center">
+    <nav className="w-full px-12 py-6 z-30 flex justify-between items-center bg-bg">
       <a href="/" className="transition-all duration-200">
         <img
           src="/nan-logo.svg"

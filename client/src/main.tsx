@@ -6,7 +6,7 @@ import "./index.css";
 import LandingPage from "./pages/LandingPage.tsx";
 import SignupPage from "./pages/SignupPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
-import DashboardPage from "./pages/DashboardPage.tsx";
+import PostPage from "./pages/PostPage.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 
 const router = createBrowserRouter([
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: "dashboard",
-        element: <DashboardPage />,
+        path: "post",
+        element: <PostPage />,
       },
       /* ADD MORE ROUTES */
     ],
