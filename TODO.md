@@ -4,6 +4,12 @@
 
 - QuipSnip
 
+- Snipski
+
+### TODO FOR MVP
+
+- [ ] make main section containers respect the navbars space, be weary of breakpoints during development
+
 ### color hexs
 
 main: #599beb

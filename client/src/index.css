@@ -21,7 +21,7 @@
 }
 
 .form {
-  @apply right-[8.5rem] mt-4;
+  @apply shadow-brutalGreen;
 }
 
 :root {

@@ -20,14 +20,14 @@ import "prism-react-editor/search.css";
 interface Props {
   hidden: boolean;
   lang: string;
+  placeholder: string;
 }
 
-export default function MyCodeEditor({ hidden, lang }: Props) {
+export default function MyCodeEditor({ hidden, lang, placeholder }: Props) {
   const styles = {
     display: hidden ? "none" : "block",
     width: "100%",
     height: "100%",
-    // borderRadius: "0.25rem",
     backgroundColor: "black",
     class: "brutalButton",
   };
@@ -36,7 +36,7 @@ export default function MyCodeEditor({ hidden, lang }: Props) {
     <Editor
       language={lang}
       wordWrap
-      value="// enter your code here"
+      value={placeholder}
       textareaProps={{
         placeholder: "Enter your code",
         name: "editor",

@@ -8,9 +8,11 @@ export default {
         mainSecondary: "#6059eb",
         bg: "#1a1f23",
         bgSecondary: "#262d33",
+        success: "#2af72a",
       },
       boxShadow: {
         brutal: "0.3em 0.3em 0 #6059eb",
+        brutalGreen: "0.3em 0.3em 0 #2af72a",
       },
       keyframes: {
         slideIn: {

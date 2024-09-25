@@ -9,6 +9,7 @@ export default function CodeForm() {
     postTitle: "",
     editor: "",
   });
+  const [placeholder, setPlaceholder] = useState("// your code here\n");
 
   const postTypes = ["Question", "Snippet"];
 
@@ -41,10 +42,14 @@ export default function CodeForm() {
       console.log(formState);
 
       setFormState({
-        type: "",
+        type: "question",
         postTitle: "",
         editor: "",
       });
+
+      // this is weird but it will always reset the placholder on form submit
+      setPlaceholder("// your code here\n");
+      return;
     }
     alert("fill out all fields");
   };
@@ -55,39 +60,44 @@ export default function CodeForm() {
       onChange={handleFormChange}
       className="gap-2 flex flex-col items-center justify-center"
     >
-      <div className="flex justify-center items-center">
-        <h2 className="p-2 text-3xl">New Post</h2>
-        <select
-          className="p-1 rounded-md text-black focus:outline-none hover:scale-[1.025] transition-all duration-150"
-          defaultValue={formState.type}
-          name="type"
-        >
-          {postTypes.map((item, i) => (
-            <option value={item.toLocaleLowerCase()} key={i}>
-              {item}
-            </option>
-          ))}
-        </select>
+      <div className="flex w-full justify-start items-center">
+        <div className="p-4 flex flex-col justify-center items-center">
+          <h2 className="p-2 text-3xl">New Post</h2>
+          <select
+            className="p-1 rounded-md text-black focus:outline-none hover:scale-[1.025] transition-all duration-150"
+            defaultValue={formState.type}
+            name="type"
+          >
+            {postTypes.map((item, i) => (
+              <option value={item.toLocaleLowerCase()} key={i}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
         <div
           className={`${
             hideCodeEditor ? "hidden" : "block"
-          } p-4 w-fit gap-1 flex flex-col`}
+          } p-4 w-fit gap-1 flex items-center justify-center`}
         >
-          <label htmlFor="postTitle" className="self-start text-gray-300">
+          {/* <label htmlFor="postTitle" className="self-start text-gray-300">
             {`${formState.type} title`}
-          </label>
+          </label> */}
           <input
             type="text"
             name="postTitle"
             id="postTitle"
-            placeholder={`Enter your ${formState.postTitle}`}
+            placeholder={`Enter your ${formState.type}'s title`}
             onChange={submittable}
             value={formState.postTitle}
             className="w-96 p-2 rounded-md text-black self-start focus:outline-none hover:scale-[1.01] transition-all duration-200"
           />
           {allowSubmit ? (
             <button type="submit" className="relative">
-              <span className="brutalButton form text-3xl font-medium hover:bg-black hover:text-white hover:border-2 hover:border-white">
+              <span
+                className="brutalButton form text-3xl font-medium hover:bg-success hover:border-4 hover:border-black"
+                style={{ right: -130, top: -25 }}
+              >
                 Submit
               </span>
             </button>
@@ -97,7 +107,11 @@ export default function CodeForm() {
         </div>
       </div>
       <div className="w-[100vw] h-[60vh] lg:w-[100vw]">
-        <MyCodeEditor hidden={hideCodeEditor} lang="jsx" />
+        <MyCodeEditor
+          hidden={hideCodeEditor}
+          lang="jsx"
+          placeholder={placeholder}
+        />
       </div>
     </form>
   );
