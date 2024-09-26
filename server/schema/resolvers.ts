@@ -70,8 +70,6 @@ const resolvers = {
         { expiresIn: "1d" }
       );
 
-      console.log({ token }, { refreshToken });
-
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -80,6 +78,30 @@ const resolvers = {
       });
 
       // return the token to the user along with profile info
+      return { token };
+    },
+    signup: async (
+      _: void,
+      { username, password }: { username: string; password: string },
+      { res }: { res: Response }
+    ) => {
+      const profile = await Profile.create({ username, password });
+      if (!profile) throw new Error("Could not create profile");
+      const token = testGenerator.sign(
+        { username, _id: profile._id },
+        { expiresIn: "15m" }
+      );
+      const refreshToken = testGenerator.sign(
+        { username, id: profile._id },
+        { expiresIn: "1d" }
+      );
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+      });
+
       return { token };
     },
     refreshToken: async (_: void, __: void, { req }: { req: Request }) => {

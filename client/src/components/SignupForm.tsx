@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { useAuthContext } from "@/Context/AuthContext";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "@/utils/mutations";
+import { LOGIN_USER, SIGNUP_USER } from "@/utils/mutations";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,20 +21,24 @@ import { Input } from "@/components/ui/input";
 // this matches more registration schema and messaging
 const signupFormSchema = z.object({
   // remember to make regex's same as db
-  username: z.string().regex(
-    /^[a-zA-Z0-9.\-_]{4,20}$/
-    // "incorrect username"
-  ),
-  password: z.string().regex(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/
-    // "password must be between 8 and 20 characters, contain one uppercase letter, one lowercase letter, one number, and one special character ( @ $ ! % * ? & )."
-  ),
+  username: z
+    .string()
+    .regex(
+      /^[a-zA-Z0-9.\-_]{4,20}$/,
+      "Username must be between 4 and 20 characters, and can only contain letters, numbers, dashes and underscores."
+    ),
+  password: z
+    .string()
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+      "password must be between 8 and 20 characters, contain one uppercase letter, one lowercase letter, one number, and one special character ( @ $ ! % * ? & )."
+    ),
 });
 
 export default function SignupForm() {
   const Auth = useAuthContext();
 
-  const [signup, { error }] = useMutation(LOGIN_USER);
+  const [signup, { error }] = useMutation(SIGNUP_USER);
 
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
@@ -52,8 +56,8 @@ export default function SignupForm() {
           variables: { ...values },
         });
         if (error) return error;
-        if (!Auth) return { error: "error authenticating" };
-        Auth.login(data.login.token);
+        if (!Auth) return { error: "error authenticating signup" };
+        Auth.login(data.signup.token);
       } catch (err) {
         console.error("thrown: ", err);
       }
@@ -81,10 +85,10 @@ export default function SignupForm() {
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
                 <FormDescription>
                   This is your public display name.
                 </FormDescription>
-                <FormMessage />
               </FormItem>
             </>
           )}
@@ -106,6 +110,8 @@ export default function SignupForm() {
                     />
                   </div>
                 </FormControl>
+                <FormMessage />
+
                 <FormDescription className="flex space-x-4">
                   <a
                     href="/forgot"

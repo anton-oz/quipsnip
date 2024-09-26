@@ -34,6 +34,7 @@ const typeDefs = `#graphql
 
     type Mutation {
         login(username: String!, password: String!): Auth
+        signup(username: String!, password: String!): Auth
         refreshToken: Auth
     }
 
