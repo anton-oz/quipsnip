@@ -42,3 +42,9 @@ html {
   background-color: #1a1f23;
   color: white;
 }
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}

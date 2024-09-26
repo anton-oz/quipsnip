@@ -2,7 +2,9 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 
-import Auth from "../utils/auth";
+// import Auth from "../utils/auth";
+
+import { useAuthContext } from "../Context/AuthContext";
 
 export default function LoginForm() {
   const [formState, setFormState] = useState({
@@ -11,6 +13,8 @@ export default function LoginForm() {
   });
 
   const [login, { error }] = useMutation(LOGIN_USER);
+
+  const Auth = useAuthContext();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,9 +36,9 @@ export default function LoginForm() {
           variables: { ...formState },
         });
         if (error) return error;
-        console.log("here", data);
+        if (!Auth)
+          return { error: "error authenticating LoginForm.tsx lines 17 & 39" };
         Auth.login(data.login.token);
-        // window.location.replace("/dashboard");
       } catch (err) {
         console.error("thrown: ", err);
       }
@@ -49,7 +53,6 @@ export default function LoginForm() {
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center gap-3 text-xl"
       >
-        {/* <h2 className="text-4xl">Login</h2> */}
         <label htmlFor="username" className="w-full text-left">
           Username
         </label>

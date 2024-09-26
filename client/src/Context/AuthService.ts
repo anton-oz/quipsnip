@@ -1,9 +1,10 @@
-// find AuthService class for ts
 import { jwtDecode } from "jwt-decode";
 
-class AuthService {
+export class AuthService {
   getProfile() {
-    return jwtDecode(this.getToken());
+    const token = this.getToken();
+    if (!token) return { error: "error getting token" };
+    return jwtDecode(token);
   }
 
   loggedIn() {
@@ -11,8 +12,9 @@ class AuthService {
     return token && !this.isTokenExpired(token) ? true : false;
   }
 
-  isTokenExpired(token) {
+  isTokenExpired(token: string) {
     const decoded = jwtDecode(token);
+    if (!decoded.exp) return { error: "error decoding token" };
     if (decoded.exp < Date.now() / 1000) {
       localStorage.removeItem("id_token");
       return true;
@@ -24,7 +26,7 @@ class AuthService {
     return localStorage.getItem("id_token");
   }
 
-  login(token) {
+  login(token: string) {
     localStorage.setItem("id_token", token);
     window.location.assign("/post");
   }
@@ -34,5 +36,3 @@ class AuthService {
     window.location.assign("/");
   }
 }
-
-export default new AuthService();

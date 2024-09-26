@@ -1,7 +1,26 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-// import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
+import path from "path";
 
+// https://vitejs.dev/config/
+export default defineConfig({
+  // plugins: [react(), VitePWA(config)],
+  plugins: [react()],
+  server: {
+    port: 3000,
+    open: true,
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+});
+
+/* 
+  KEEPING THE CODE BELOW IN CASE I EVER DO PWA AGAIN, MAY DELETE LATER
+*/
+// import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 // const config: Partial<VitePWAOptions> = {
 //   registerType: "autoUpdate",
 //   devOptions: {
@@ -33,13 +52,3 @@ import react from "@vitejs/plugin-react-swc";
 //     ],
 //   },
 // };
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  // plugins: [react(), VitePWA(config)],
-  plugins: [react()],
-  server: {
-    port: 3000,
-    open: true,
-  },
-});

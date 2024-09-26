@@ -3,26 +3,12 @@ import jwt from "jsonwebtoken";
 class TokenGenerator {
   private secretOrPrivateKey: string;
   public secretOrPublicKey: string;
-  private options: jwt.SignOptions;
+  private options?: jwt.SignOptions;
 
-  constructor(
-    secretOrPrivateKey: string,
-    secretOrPublicKey: string,
-    options: jwt.SignOptions
-  ) {
-    this.secretOrPrivateKey = secretOrPrivateKey;
+  constructor(secretOrPublicKey: string, options?: jwt.SignOptions) {
+    this.secretOrPrivateKey = process.env.SECRET || "frigofflahey";
     this.secretOrPublicKey = secretOrPublicKey;
     this.options = options;
-  }
-
-  test(): void {
-    console.log(
-      jwt.sign(
-        { name: "tets", pass: "woo$332)" },
-        this.secretOrPrivateKey,
-        this.options
-      )
-    );
   }
 
   private isJwtPayload(payload: any): payload is jwt.JwtPayload {
@@ -39,24 +25,20 @@ class TokenGenerator {
     return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
   }
 
-  refresh(token: string, refreshOptions: jwt.VerifyOptions): string {
+  refresh(token: string, refreshOptions?: jwt.VerifyOptions): string {
     const payload: string | jwt.JwtPayload | jwt.Jwt = jwt.verify(
       token,
-      this.secretOrPublicKey,
+      this.secretOrPrivateKey,
       refreshOptions
     );
-    if (this.isJwtPayload(payload)) {
-      console.log("\npayload is good\n");
-    } else {
+    if (!this.isJwtPayload(payload)) {
       return "{ error: 'invalid payload' }";
     }
     delete payload.iat;
     delete payload.exp;
     delete payload.nbf;
     delete payload.jti; //We are generating a new token, if you are using jwtid during signing, pass it in refreshOptions
-    const jwtSignOptions = Object.assign({}, this.options, {
-      //   jwtid: refreshOptions.jwtid,
-    });
+    const jwtSignOptions = Object.assign({}, this.options, refreshOptions);
     // The first signing converted all needed options into claims, they are already in the payload
     return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
   }

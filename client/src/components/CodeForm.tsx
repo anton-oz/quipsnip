@@ -108,7 +108,6 @@ export default function CodeForm() {
             name="postTitle"
             id="postTitle"
             placeholder={`Enter your ${formState.type.toLocaleLowerCase()}'s title`}
-            // onChange={submittable}
             value={formState.postTitle}
             className="w-96 p-2 rounded-md text-black self-start focus:outline-none hover:scale-[1.01] transition-all duration-200"
           />

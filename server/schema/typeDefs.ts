@@ -8,7 +8,7 @@ const typeDefs = `#graphql
 
     type Auth {
         token: ID!
-        profile: Profile
+        # profile: Profile!
     }
 
     type Post {
@@ -34,6 +34,7 @@ const typeDefs = `#graphql
 
     type Mutation {
         login(username: String!, password: String!): Auth
+        refreshToken: Auth
     }
 
 `;

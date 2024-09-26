@@ -8,6 +8,8 @@
 
 ### TODO FOR MVP
 
+- [ ] let user know about cookie usage when they first visit the site ( implement modal )
+
 - [ ] post is saved to db with correct user
 
 - [ ] post renders in feed based on time posted, only show 10 most recent posts unless request more
@@ -22,10 +24,9 @@
 
 - [ ] comment on other posts
 
-- - [X] comment model in db
+- - [x] comment model in db
 
 - - [ ] can see comments on each post
-
 
 ### color hexs
 

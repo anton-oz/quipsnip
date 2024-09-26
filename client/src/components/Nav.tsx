@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
 import { Ellipsis } from "lucide-react";
-import Auth from "../utils/auth";
+// import Auth from "../utils/auth";
+
+import { useAuthContext } from "../Context/AuthContext";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const loggedIn = Auth.loggedIn();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const Auth = useAuthContext();
 
   useEffect(() => {
-    console.log(Auth.loggedIn());
-  }, []);
+    if (Auth?.loggedIn()) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  }, [Auth?.loggedIn]);
+
+
 
   // const navLinks = ["Create", "Sign up", "Login", "Support Creator"];
   const navLinks = loggedIn
@@ -28,7 +37,7 @@ export default function Nav() {
   };
 
   const logout = () => {
-    Auth.logout();
+    Auth?.logout();
   };
 
   return (
