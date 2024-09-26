@@ -1,20 +1,4 @@
-// - - - -  TODO - - - -
-/* 
-    MAKE AN AUTH CONTEXT FOR PROPER TOKEN REFRESH
-
-    - have modal alert happen right before the token is going to expire, 
-    if the user clicks within the time frame refresh the token 
-
-    - refreshed token lasts longer, will need another function so that if
-     the user does not login in the longer timeframe the token still is
-    removed.
-
-    - context needs to have a function start when the user logs in
-
-*/
-
 import {
-  MouseEventHandler,
   ReactNode,
   createContext,
   useContext,
@@ -34,8 +18,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useMutation } from "@apollo/client";
 
+import { ApolloError, useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "../utils/mutations";
 
 const AuthContext = createContext<AuthService | null>(null);
@@ -50,16 +34,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const openModal = () => setViewModal(true);
   const closeModal = () => setViewModal(false);
 
-  // const [refreshToken, { error }] = useMutation(REFRESH_TOKEN);
+  const [refreshToken, { error }] = useMutation(REFRESH_TOKEN);
 
   useEffect(() => {
-    const timeout = 5 * 1000;
-
-    console.log(Auth.getProfile());
+    const timeout = 14 * 60 * 1000;
 
     if (Auth?.loggedIn()) {
+      console.log(Auth.getProfile());
       setTimeout(() => {
         openModal();
+
+        setTimeout(() => {
+          const token = Auth.getToken();
+          console.log(token);
+          const expired = token ? Auth.isTokenExpired(token) : true;
+          if (expired) window.location.replace("/");
+        }, 1 * 60 * 1000);
       }, timeout);
     }
   }, [Auth.loggedIn()]);
@@ -67,7 +57,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AuthContext.Provider value={Auth}>
       <AlertDialog open={viewModal} onOpenChange={setViewModal}>
-        {/* <AlertDialogTrigger>Open</AlertDialogTrigger> */}
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>You Still There?</AlertDialogTitle>
@@ -86,9 +75,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               Logout
             </AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => {
+              onClick={async () => {
                 closeModal();
-                // refreshToken()
+                await refreshToken();
+                if (error) throw new ApolloError(error);
               }}
             >
               I'm Here

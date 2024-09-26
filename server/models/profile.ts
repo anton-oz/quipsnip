@@ -24,11 +24,19 @@ const profileSchema = new Schema<
     unique: true,
     trim: true,
     match: [
-      /^[a-zA-Z0-9.\-_]{4,12}$/,
+      /^[a-zA-Z0-9.\-_]{4,20}$/,
       "Username must be between 4 and 12 characters and contain only letters, numbers, periods, hyphens, and underscores!",
     ],
   },
-  password: { type: String, required: true, minlength: 4 },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    match: [
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+      "password must be between 8 and 20 characters, contain one uppercase letter, one lowercase letter, one number, and one special character ( @ $ ! % * ? & ).",
+    ],
+  },
 });
 
 // middleware to hash password before saving to db

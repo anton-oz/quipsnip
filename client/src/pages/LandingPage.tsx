@@ -6,7 +6,7 @@ export default function LandingPage() {
       <div className=" px-12 py-16 flex flex-col items-center justify-center rounded-xl">
         <h1 className="text-7xl font-semibold ">
           {/* 
-                                ADD comment, answer cycling in the span below        
+                             ADD comment, answer cycling in the span below        
           */}
           Have a <span className="text-gradient">Question</span>?
         </h1>

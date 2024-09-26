@@ -13,6 +13,7 @@
     "server:seed": "cd server && pnpm seed",
     "server:build": "cd server && pnpm build",
     "server:start": "cd server && pnpm start",
+    "build": "concurrently \"pnpm client:build\" \"pnpm server:build\"",
     "start": "concurrently \"pnpm client:start\" \"pnpm server:start\"",
     "dev": "concurrently \"pnpm client:dev\" \"pnpm server:dev\""
   },

@@ -14,7 +14,7 @@ export class AuthService {
 
   isTokenExpired(token: string) {
     const decoded = jwtDecode(token);
-    if (!decoded.exp) return { error: "error decoding token" };
+    if (!decoded.exp) return { error: "Authentication Error" };
     if (decoded.exp < Date.now() / 1000) {
       localStorage.removeItem("id_token");
       return true;

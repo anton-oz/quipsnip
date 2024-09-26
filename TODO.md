@@ -8,19 +8,25 @@
 
 ### TODO FOR MVP
 
+- [ ] set up `.env` and `.env.example`
+
 - [ ] let user know about cookie usage when they first visit the site ( implement modal )
 
 - [ ] post is saved to db with correct user
 
 - [ ] post renders in feed based on time posted, only show 10 most recent posts unless request more
 
-- [ ] sign up page
+- [ ] **\* \* PRIORITY \* \*** rework UI with shadcn ( particulary with forms for type safety )
 
-- [ ] dedicated login page
+- - [ ] sign up page
+
+- - [ ] dedicated login page
 
 - [ ] make landing page able to see feed, but prompted to login
 
-- [ ] jwt refresh
+- [x] jwt refresh
+
+- [ ] harden jwt refresh
 
 - [ ] comment on other posts
 

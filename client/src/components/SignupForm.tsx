@@ -1,11 +1,10 @@
-/* 
-    reworking login form with shadcn
-*/
-
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { useAuthContext } from "@/Context/AuthContext";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "@/utils/mutations";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,38 +18,41 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../utils/mutations";
-
-import { useAuthContext } from "@/Context/AuthContext";
-
-const loginFormSchema = z.object({
-  username: z.string(),
-  password: z.string(),
+// this matches more registration schema and messaging
+const signupFormSchema = z.object({
+  // remember to make regex's same as db
+  username: z.string().regex(
+    /^[a-zA-Z0-9.\-_]{4,20}$/
+    // "incorrect username"
+  ),
+  password: z.string().regex(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/
+    // "password must be between 8 and 20 characters, contain one uppercase letter, one lowercase letter, one number, and one special character ( @ $ ! % * ? & )."
+  ),
 });
 
-export default function LoginForm() {
-  const [login, { error }] = useMutation(LOGIN_USER);
+export default function SignupForm() {
   const Auth = useAuthContext();
 
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+  const [signup, { error }] = useMutation(LOGIN_USER);
+
+  const form = useForm<z.infer<typeof signupFormSchema>>({
+    resolver: zodResolver(signupFormSchema),
     defaultValues: {
       username: "",
       password: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+  async function onSubmit(values: z.infer<typeof signupFormSchema>) {
     console.log(values);
     if (values.username && values.password) {
       try {
-        const { data } = await login({
+        const { data } = await signup({
           variables: { ...values },
         });
         if (error) return error;
-        if (!Auth)
-          return { error: "error authenticating" };
+        if (!Auth) return { error: "error authenticating" };
         Auth.login(data.login.token);
       } catch (err) {
         console.error("thrown: ", err);
@@ -59,7 +61,6 @@ export default function LoginForm() {
       return alert("fill out both fields");
     }
   }
-
   return (
     <Form {...form}>
       <form

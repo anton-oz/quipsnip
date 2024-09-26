@@ -10,6 +10,8 @@ import { Request, Response } from "express";
 
 import jwt, { JwtPayload } from "jsonwebtoken";
 
+const testGenerator = new TokenGenerator("publicKey");
+
 const resolvers = {
   Query: {
     profiles: async () => {
@@ -35,9 +37,10 @@ const resolvers = {
         console.error(err);
       }
     },
-    // comments: async () => {
-
-    // }
+    /* comments: async () => {
+          TODO: get comments from db
+       } 
+    */
   },
   Mutation: {
     login: async (
@@ -56,16 +59,18 @@ const resolvers = {
       const idString = profile._id.toString();
 
       // if it gets here authentication has completed, so a jwt token is signed
-      const token = new TokenGenerator(idString, {}).sign(
+      const token = testGenerator.sign(
         { username, _id: idString },
-        { expiresIn: "10m" }
+        { expiresIn: "15m" }
       );
 
       // this token is for issuing new tokens, longer expire time
-      const refreshToken = new TokenGenerator(idString, {}).sign(
+      const refreshToken = testGenerator.sign(
         { username, _id: idString },
         { expiresIn: "1d" }
       );
+
+      console.log({ token }, { refreshToken });
 
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -75,16 +80,20 @@ const resolvers = {
       });
 
       // return the token to the user along with profile info
-      return { token, profile };
+      return { token };
     },
     refreshToken: async (_: void, __: void, { req }: { req: Request }) => {
       const refreshToken = req.cookies.refreshToken;
-      if (!refreshToken) throw new Error("Unauthorized");
+      if ((typeof refreshToken == "string") === false)
+        throw new Error("Unauthorized");
+      const decoded = jwt.decode(refreshToken);
       try {
-        const token /* new token */ = new TokenGenerator(
-          "randomkey" /* need to change this */,
-          {}
-        ).refresh(refreshToken /* checking refresh token before issuing new */);
+        const token /* new token */ = testGenerator.refresh(
+          refreshToken /* checking refresh token before issuing new */
+          // decoded && typeof decoded !== "string"
+          //   ? { jwtid: decoded._id }
+          //   : undefined
+        );
         return { token };
       } catch (err: any) {
         throw new Error("thrown error: ", err);
