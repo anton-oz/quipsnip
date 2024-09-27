@@ -1,13 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { GET_POSTS } from "@/utils/queries";
-import React from "react";
+import PostCard from "@/components/PostCard";
+
+import { PostI } from "@/lib/utils";
 
 export default function LandingPage() {
   const { loading, error, data } = useQuery(GET_POSTS);
-
-  React.useEffect(() => {
-    console.log(JSON.stringify(data, null, 2));
-  }, [data]);
 
   return (
     <section className="h-full pb-20 grid grid-cols-auto items-center place-items-center bg-bg">
@@ -29,24 +27,14 @@ export default function LandingPage() {
           to get started!
         </p>
       </div>
-      <div className="h-[200vh] w-[80vw] lg:w-[70vw] flex flex-col items-center justify-start bg-white bg-opacity-50 gap-4 p-5">
+      <div className="h-[200vh] w-[80vw] lg:w-[70vw] flex flex-col items-center justify-start bg-white bg-opacity-50 rounded-sm gap-4 p-5">
         {loading ? (
           <p>loading...</p>
         ) : error ? (
           <p>error getting data</p>
         ) : data ? (
-          /* 
-              TODO: MAKE A POST INTERFACE
-          */
-          data.posts.map((post: any, i: number) => (
-            <div key={i}>
-              <h3>title: {post.title}</h3>
-              <p>user: {post.user.username}</p>
-              <p className="bg-black">query info:</p>
-              <textarea className="h-[50vh] w-[20vw] text-black ">
-                {JSON.stringify(post, null, 2)}
-              </textarea>
-            </div>
+          data.posts.map((post: PostI, i: number) => (
+            <PostCard post={post} key={i}/>
           ))
         ) : (
           "holy moly"

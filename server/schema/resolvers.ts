@@ -36,7 +36,6 @@ const resolvers = {
           });
 
         if (!posts) return { error: "no posts" };
-        console.log(posts);
         return posts;
       } catch (err) {
         console.error(err);

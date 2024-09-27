@@ -1,12 +1,14 @@
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import App from "./App.tsx";
 import "./index.css";
+import { LoaderCircle } from "lucide-react";
 
-import LandingPage from "./pages/LandingPage.tsx";
-import PostPage from "./pages/PostPage.tsx";
-import ErrorPage from "./pages/ErrorPage.tsx";
-import LoginAndSignupPage from "./pages/LoginAndSignupPage.tsx";
+const LandingPage = lazy(() => import("./pages/LandingPage.tsx"));
+const PostPage = lazy(() => import("./pages/PostPage.tsx"));
+const ErrorPage = lazy(() => import("./pages/ErrorPage.tsx"));
+const LoginAndSignupPage = lazy(() => import("./pages/LoginAndSignupPage.tsx"));
 
 const router = createBrowserRouter([
   {
@@ -36,5 +38,14 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />
+  <Suspense
+    fallback={
+      <div className="h-full w-full flex flex-col justify-center items-center">
+        <LoaderCircle size={40} className="animate-spin" />
+        <p>loading...</p>
+      </div>
+    }
+  >
+    <RouterProvider router={router} />
+  </Suspense>
 );

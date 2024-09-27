@@ -1,4 +1,4 @@
-import { Editor } from "prism-react-editor";
+import { Editor, PrismEditor } from "prism-react-editor";
 import { BasicSetup } from "prism-react-editor/setups";
 
 // Adding the JSX grammar
@@ -17,34 +17,86 @@ import "prism-react-editor/themes/vs-code-dark.css";
 // Required by the basic setup
 import "prism-react-editor/search.css";
 
+import { Copy, Check } from "lucide-react";
+
+import { useRef, useState } from "react";
+
 interface Props {
   hidden: boolean;
   lang: string;
   placeholder: string;
+  readOnly?: boolean;
 }
 
-export default function MyCodeEditor({ hidden, lang, placeholder }: Props) {
+export default function MyCodeEditor({
+  hidden,
+  lang,
+  placeholder,
+  readOnly,
+}: Props) {
+  const codeRef = useRef<PrismEditor | null>(null);
+  const [copySuccess, setCopySuccess] = useState(false);
+
   const styles = {
     display: hidden ? "none" : "block",
     width: "100%",
     height: "100%",
+    maxHeight: "40vh",
+    padding: "0.75rem",
     backgroundColor: "black",
-    class: "brutalButton",
+    borderRadius: "0.25rem",
+  };
+
+  const copyToClipboard = async () => {
+    if (codeRef.current?.textarea) {
+      // Select the content
+      codeRef.current.textarea.select();
+      codeRef.current.textarea.setSelectionRange(0, 99999); // For mobile devices
+      // Copy the text inside the textarea
+      try {
+        codeRef.current.textarea?.blur();
+        await navigator.clipboard.writeText(codeRef.current.value);
+        setCopySuccess(true);
+        setTimeout(() => {
+          setCopySuccess(false);
+        }, 2000);
+      } catch (err) {
+        console.error("Failed to copy: ", err);
+      }
+    } else {
+      return new Error("Undefined");
+    }
   };
 
   return (
-    <Editor
-      language={lang}
-      wordWrap
-      value={placeholder}
-      textareaProps={{
-        placeholder: "Enter your code",
-        name: "editor",
-        "aria-label": "Code editor",
-      }}
-      style={styles}
-    >
-      {(editor: any) => <BasicSetup editor={editor} />}
-    </Editor>
+    <div className="relative">
+      <div className="absolute top-3 right-0 z-50 m-1 mr-4 p-1 border border-zinc-100 bg-black rounded cursor-pointer transtion-all duration-150">
+        {copySuccess ? (
+          <Check size={20} color="white" />
+        ) : (
+          <Copy
+            size={20}
+            color="white"
+            onClick={copyToClipboard}
+            className="hover:scale-105 transtion-all duration-150"
+          />
+        )}
+      </div>
+      <Editor
+        language={lang}
+        wordWrap
+        value={placeholder}
+        readOnly={readOnly}
+        textareaProps={{
+          placeholder: "Enter your code",
+          name: "editor",
+          "aria-label": "Code editor",
+        }}
+        ref={codeRef}
+        style={styles}
+      >
+        {(editor: any) => <BasicSetup editor={editor} />}
+      </Editor>
+    </div>
   );
 }

@@ -42,6 +42,14 @@
 
 ### polishing
 
+- [ ] write unit tests to improve speed of debugging
+
+- - have unit test passing badges in readme ( .github/workflow config )
+
+- - - make unit tests pass before merging into main 
+
+- [ ] css breakpoints for all screens
+
 - [ ] all html elements have full accessibility attributes
 
 ### color hexs

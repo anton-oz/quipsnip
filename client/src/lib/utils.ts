@@ -24,3 +24,20 @@ export const handleLogout = async (
     // Handle error (e.g., show a notification)
   }
 };
+
+export interface PostI {
+  user: {
+    username: string;
+  };
+  type: string;
+  title: string;
+  code: string;
+  comments: [
+    {
+      text: string;
+      user: {
+        username: string;
+      };
+    }
+  ];
+}

@@ -1,7 +1,16 @@
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
+import {
+  useRouteError,
+  isRouteErrorResponse,
+  useNavigate,
+} from "react-router-dom";
 
 export default function ErrorPage() {
   const error = useRouteError();
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   console.error(error);
   return (
@@ -20,9 +29,14 @@ export default function ErrorPage() {
           )}
         </div>
       </div>
-      <a href="/" className="relative w-full">
-        <span className="brutalButtonMiddle">Go home</span>
-      </a>
+      <div className="flex space-x-[10rem] relative">
+        <a href="/" className="relative ml-[4rem]">
+          <span className="brutalButtonMiddle w-max">Go home</span>
+        </a>
+        <button type="button" onClick={goBack} className="relative">
+          <span className="brutalButtonMiddle w-max">Go back</span>
+        </button>
+      </div>
     </section>
   );
 }
