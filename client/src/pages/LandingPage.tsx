@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_PROFILES, GET_POSTS } from "@/utils/queries";
+import { GET_POSTS } from "@/utils/queries";
 import React from "react";
 
 export default function LandingPage() {
