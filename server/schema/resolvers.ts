@@ -20,11 +20,15 @@ const resolvers = {
     profile: async (_: void, { _id }: { _id: ObjectId }) => {
       return Profile.findOne({ _id });
     },
+
     posts: async () => {
       try {
         const posts = await Post.find()
+          // setting limit to 10 posts, so create multiple queries or another
+          // query for getting more posts
+          .sort({ createdAt: -1 })
+          .limit(10)
           .populate("user")
-
           // populate user in sub documents
           .populate({
             path: "comments",
@@ -32,6 +36,7 @@ const resolvers = {
           });
 
         if (!posts) return { error: "no posts" };
+        console.log(posts);
         return posts;
       } catch (err) {
         console.error(err);

@@ -24,9 +24,27 @@
   @apply shadow-brutalGreen;
 }
 
+/* 
+
+        main: "#599beb",
+        mainDarker: "#4177ba",
+        mainSecondary: "#6059eb",
+        bg: "#1a1f23",
+        bgSecondary: "#262d33",
+        success: "#2af72a",
+
+*/
+
 :root {
-  --bg: #9dc4f3;
+  --bg: #1a1f23;
   --grad: linear-gradient(45deg, #599beb, #6059eb);
+  --htmlBg: #27272a;
+}
+
+html {
+  font-family: "Manrope", sans-serif;
+  background-color: var(--htmlBg);
+  color: white;
 }
 
 .text-gradient {
@@ -45,10 +63,12 @@
   text-fill-color: white;
 }
 
-html {
-  font-family: "Manrope", sans-serif;
-  background-color: #1a1f23;
-  color: white;
+.footer-gradient {
+  background: linear-gradient(var(--bg), #27272a);
+}
+
+.nav-gradient {
+  background: linear-gradient(to top, var(--bg), #27272a);
 }
 
 @layer base {

@@ -33,9 +33,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
         {renderEye ? (
           showPassword ? (
-            <EyeOffIcon {...eyeProps} />
-          ) : (
             <EyeIcon {...eyeProps} />
+          ) : (
+            <EyeOffIcon {...eyeProps} />
           )
         ) : null}
       </>

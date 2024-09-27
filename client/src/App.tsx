@@ -9,6 +9,7 @@ import {
 } from "@apollo/client";
 
 import { AuthProvider } from "./Context/AuthContext";
+import Footer from "./components/Footer";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:3001/graphql",
@@ -24,13 +25,15 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <Nav />
-        <main className="w-screen h-screen">
-          <Outlet />
-        </main>
-        <footer className="text-white bottom-0">
-          <p>footer</p>
-        </footer>
+        {/* if this div isnt here */}
+        <div className="flex flex-col relative h-full">
+          {/* the whole thing renders improperly */}
+          <Nav />
+          <main className="w-screen flex-grow">
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
       </AuthProvider>
     </ApolloProvider>
   );

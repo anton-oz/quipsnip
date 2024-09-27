@@ -5,3 +5,30 @@ export const HELLO_QUERY = gql`
     hello
   }
 `;
+
+export const GET_PROFILES = gql`
+  query GetProfiles {
+    profiles {
+      username
+    }
+  }
+`;
+
+export const GET_POSTS = gql`
+  query Posts {
+    posts {
+      user {
+        username
+      }
+      type
+      title
+      comments {
+        text
+        user {
+          username
+        }
+      }
+      code
+    }
+  }
+`;

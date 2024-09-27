@@ -6,7 +6,6 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -49,8 +48,7 @@ export default function LoginForm() {
           variables: { ...values },
         });
         if (error) return error;
-        if (!Auth)
-          return { error: "error authenticating" };
+        if (!Auth) return { error: "error authenticating" };
         Auth.login(data.login.token);
       } catch (err) {
         console.error("thrown: ", err);
@@ -64,7 +62,7 @@ export default function LoginForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 max-w-[50%] w-[50%] p-4 bg-zinc-800 rounded border-zinc-700 border "
+        className="space-y-8 w-[90vw] sm:w-[80vw] md:w[70vw] lg:w-[55vw] 2xl:w-[30vw] p-4 bg-zinc-800 rounded border-zinc-700 border "
       >
         <FormField
           control={form.control}
@@ -77,6 +75,7 @@ export default function LoginForm() {
                   <Input
                     type="text"
                     placeholder="enter your username..."
+                    autoComplete="username"
                     {...field}
                   />
                 </FormControl>
@@ -100,12 +99,13 @@ export default function LoginForm() {
                     <Input
                       type="password"
                       placeholder="enter your password..."
-                      {...field}
+                      autoComplete="current-password"
                       className="bg-white text-black focus:outline-sky-500"
+                      {...field}
                     />
                   </div>
                 </FormControl>
-                <FormDescription className="flex space-x-4">
+                <FormDescription className="flex space-x-4 pt-2">
                   <a
                     href="/forgot"
                     className="underline underline-offset-2 hover:underline-offset-[1px] text-sky-400 font-thin hover:text-sky-500 transition-all duration-200"

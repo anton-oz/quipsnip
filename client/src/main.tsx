@@ -4,10 +4,9 @@ import App from "./App.tsx";
 import "./index.css";
 
 import LandingPage from "./pages/LandingPage.tsx";
-import SignupPage from "./pages/SignupPage.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
 import PostPage from "./pages/PostPage.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
+import LoginAndSignupPage from "./pages/LoginAndSignupPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -21,11 +20,11 @@ const router = createBrowserRouter([
       },
       {
         path: "signup",
-        element: <SignupPage />,
+        element: <LoginAndSignupPage />,
       },
       {
         path: "login",
-        element: <LoginPage />,
+        element: <LoginAndSignupPage />,
       },
       {
         path: "post",

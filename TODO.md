@@ -8,6 +8,8 @@
 
 ### TODO FOR MVP
 
+- [ ]
+
 - [ ] set up `.env` and `.env.example`
 
 - [ ] let user know about cookie usage when they first visit the site ( implement modal )
@@ -28,11 +30,19 @@
 
 - [ ] harden jwt refresh
 
+- - move refresh token to server side only ( currently in httponly cookie )
+
+- - test access token in httponly cookie, might not be entirely feasible
+
 - [ ] comment on other posts
 
 - - [x] comment model in db
 
 - - [ ] can see comments on each post
+
+### polishing
+
+- [ ] all html elements have full accessibility attributes
 
 ### color hexs
 
