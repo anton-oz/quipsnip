@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { useAuthContext } from "@/Context/AuthContext";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER, SIGNUP_USER } from "@/utils/mutations";
+import { SIGNUP_USER } from "@/utils/mutations";
 
 import { Button } from "@/components/ui/button";
 import {

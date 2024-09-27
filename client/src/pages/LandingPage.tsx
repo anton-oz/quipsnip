@@ -1,5 +1,3 @@
-import LoginForm from "../components/LoginForm";
-
 export default function LandingPage() {
   return (
     <section className="grid items-center place-items-center">

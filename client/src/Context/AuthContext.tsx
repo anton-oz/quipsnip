@@ -20,7 +20,9 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { ApolloError, useMutation } from "@apollo/client";
-import { REFRESH_TOKEN } from "../utils/mutations";
+import { LOGOUT_USER, REFRESH_TOKEN } from "../utils/mutations";
+
+import { handleLogout } from "@/lib/utils";
 
 const AuthContext = createContext<AuthService | null>(null);
 
@@ -34,7 +36,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const openModal = () => setViewModal(true);
   const closeModal = () => setViewModal(false);
 
-  const [refreshToken, { error }] = useMutation(REFRESH_TOKEN);
+  const [refreshToken, { error: refreshError }] = useMutation(REFRESH_TOKEN);
+  const [logout, { error: logoutError }] = useMutation(LOGOUT_USER);
 
   useEffect(() => {
     const timeout = 14 * 60 * 1000;
@@ -69,7 +72,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             <AlertDialogCancel
               onClick={() => {
                 closeModal();
-                Auth.logout();
+                handleLogout(logout, logoutError, Auth);
               }}
             >
               Logout
@@ -78,7 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               onClick={async () => {
                 closeModal();
                 await refreshToken();
-                if (error) throw new ApolloError(error);
+                if (refreshError) throw new ApolloError(refreshError);
               }}
             >
               I'm Here

@@ -4,8 +4,10 @@ import { Ellipsis } from "lucide-react";
 
 import { useAuthContext } from "../Context/AuthContext";
 
-import { ApolloError, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { LOGOUT_USER } from "@/utils/mutations";
+
+import { handleLogout } from "@/lib/utils";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -40,11 +42,11 @@ export default function Nav() {
     return link.replace(/\s+/g, ""); // regex to remove spaces
   };
 
-  const handleLogout = async () => {
-    await logout();
-    if (error) throw new ApolloError(error);
-    Auth?.logout();
-  };
+  // const handleLogout = async () => {
+  //   await logout();
+  //   if (error) throw new ApolloError(error);
+  //   Auth?.logout();
+  // };
 
   return (
     <nav className="w-full px-12 py-6 z-30 flex justify-between items-center bg-bg">
@@ -87,7 +89,10 @@ export default function Nav() {
             {navLinks.map((link, i) =>
               link === "Logout" ? (
                 <li key={i} className="relative w-full">
-                  <button onClick={handleLogout} className="brutalButton">
+                  <button
+                    onClick={() => handleLogout(logout, error, Auth)}
+                    className="brutalButton"
+                  >
                     {link}
                   </button>
                 </li>
