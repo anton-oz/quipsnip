@@ -104,6 +104,10 @@ const resolvers = {
 
       return { token };
     },
+    logout: async (_: void, __: void, { res }: { res: Response }) => {
+      res.clearCookie("refreshToken");
+      return true;
+    },
     refreshToken: async (_: void, __: void, { req }: { req: Request }) => {
       const refreshToken = req.cookies.refreshToken;
       if ((typeof refreshToken == "string") === false)

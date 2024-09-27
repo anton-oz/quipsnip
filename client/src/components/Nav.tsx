@@ -4,10 +4,16 @@ import { Ellipsis } from "lucide-react";
 
 import { useAuthContext } from "../Context/AuthContext";
 
+import { ApolloError, useMutation } from "@apollo/client";
+import { LOGOUT_USER } from "@/utils/mutations";
+
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+
   const Auth = useAuthContext();
+
+  const [logout, { error }] = useMutation(LOGOUT_USER);
 
   useEffect(() => {
     if (Auth?.loggedIn()) {
@@ -17,12 +23,10 @@ export default function Nav() {
     }
   }, [Auth?.loggedIn]);
 
-
-
   // const navLinks = ["Create", "Sign up", "Login", "Support Creator"];
   const navLinks = loggedIn
     ? ["About", "Support Creator", "Logout"]
-    : ["About", "Support Creator", "Sign up"];
+    : ["About", "Support Creator", "Login", "Sign up"];
   const mainLinks = ["Post", "Feed", "Profile"];
 
   const logoDim = 60;
@@ -36,7 +40,9 @@ export default function Nav() {
     return link.replace(/\s+/g, ""); // regex to remove spaces
   };
 
-  const logout = () => {
+  const handleLogout = async () => {
+    await logout();
+    if (error) throw new ApolloError(error);
     Auth?.logout();
   };
 
@@ -77,11 +83,11 @@ export default function Nav() {
           />
         </button>
         {menuOpen ? (
-          <ul className="z-50 w-48 h-[9.33rem]  p-2 absolute right-3 top-[5.5rem] gap-12 flex flex-col items-center justify-start animate-slideIn bg-white bg-opacity-65 rounded-lg">
+          <ul className="z-[10000] w-48 h-[12.33rem]  p-2 absolute right-3 top-[5.5rem] gap-12 flex flex-col items-center justify-start animate-slideIn bg-white bg-opacity-65 rounded-lg">
             {navLinks.map((link, i) =>
               link === "Logout" ? (
                 <li key={i} className="relative w-full">
-                  <button onClick={logout} className="brutalButton">
+                  <button onClick={handleLogout} className="brutalButton">
                     {link}
                   </button>
                 </li>

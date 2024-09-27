@@ -31,7 +31,7 @@ const signupFormSchema = z.object({
     .string()
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
-      "password must be between 8 and 20 characters, contain one uppercase letter, one lowercase letter, one number, and one special character ( @ $ ! % * ? & )."
+      "password must be between 8 and 20 characters, contain one uppercase letter, one lowercase leclient/src/components/Nav.tsxtter, one number, and one special character ( @ $ ! % * ? & )."
     ),
 });
 

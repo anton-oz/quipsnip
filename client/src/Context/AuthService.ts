@@ -31,7 +31,7 @@ export class AuthService {
     window.location.assign("/post");
   }
 
-  logout() {
+  async logout() {
     localStorage.removeItem("id_token");
     window.location.assign("/");
   }
