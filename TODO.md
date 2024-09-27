@@ -8,7 +8,11 @@
 
 ### TODO FOR MVP
 
-- [ ]
+- [ ] implement lazy loading for smaller bundle size
+
+- - only loads neccesary modules depending on where in the page you are
+
+- - ( react suspense )
 
 - [ ] set up `.env` and `.env.example`
 
@@ -46,7 +50,7 @@
 
 - - have unit test passing badges in readme ( .github/workflow config )
 
-- - - make unit tests pass before merging into main 
+- - - make unit tests pass before merging into main
 
 - [ ] css breakpoints for all screens
 

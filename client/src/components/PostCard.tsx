@@ -36,7 +36,7 @@ export default function PostCard({ post }: { post: Post }) {
           submitted by{" "}
           <a
             href={`/profile/${post.user.username}`}
-            className="cursor-pointer underline hover:text-zinc-700 transition-all duration-150"
+            className="cursor-pointer underline text-zinc-600 hover:text-zinc-800 hover:pl-1 transition-all duration-150"
           >
             {post.user.username}
           </a>

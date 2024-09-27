@@ -3,7 +3,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import App from "./App.tsx";
 import "./index.css";
-import { LoaderCircle } from "lucide-react";
+
+import LazyLoader from "./components/SuspenseLoading.tsx";
 
 const LandingPage = lazy(() => import("./pages/LandingPage.tsx"));
 const PostPage = lazy(() => import("./pages/PostPage.tsx"));
@@ -38,14 +39,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")!).render(
-  <Suspense
-    fallback={
-      <div className="h-full w-full flex flex-col justify-center items-center">
-        <LoaderCircle size={40} className="animate-spin" />
-        <p>loading...</p>
-      </div>
-    }
-  >
+  <Suspense fallback={<LazyLoader delay={300} />}>
     <RouterProvider router={router} />
   </Suspense>
 );

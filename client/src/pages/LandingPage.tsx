@@ -3,6 +3,7 @@ import { GET_POSTS } from "@/utils/queries";
 import PostCard from "@/components/PostCard";
 
 import { PostI } from "@/lib/utils";
+import { LoaderCircle } from "lucide-react";
 
 export default function LandingPage() {
   const { loading, error, data } = useQuery(GET_POSTS);
@@ -29,7 +30,7 @@ export default function LandingPage() {
       </div>
       <div className="h-[200vh] w-[80vw] lg:w-[70vw] flex flex-col items-center justify-start bg-white bg-opacity-50 rounded-sm gap-4 p-5">
         {loading ? (
-          <p>loading...</p>
+         <LoaderCircle size={20} className="animate-spin" />
         ) : error ? (
           <p>error getting data</p>
         ) : data ? (
