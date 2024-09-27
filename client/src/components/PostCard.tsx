@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/card";
 
 import MyCodeEditor from "./MyCodeEditor";
+import { useState } from "react";
+import { SquareArrowOutUpRight } from "lucide-react";
 
 interface Post {
   user: {
@@ -27,6 +29,8 @@ interface Post {
 }
 
 export default function PostCard({ post }: { post: Post }) {
+  const [showArrow, setShowArrow] = useState(false);
+
   return (
     <Card className="w-full rounded-sm">
       <CardHeader>
@@ -36,9 +40,18 @@ export default function PostCard({ post }: { post: Post }) {
           submitted by{" "}
           <a
             href={`/profile/${post.user.username}`}
-            className="cursor-pointer underline text-zinc-600 hover:text-zinc-800 hover:pl-1 transition-all duration-150"
+            className="relative cursor-pointer underline text-zinc-600 hover:text-zinc-800 hover:pl-[0.15rem] transition-all duration-150"
+            onMouseEnter={() => setShowArrow(true)}
+            onMouseLeave={() => setShowArrow(false)}
           >
             {post.user.username}
+            {showArrow ? (
+              <SquareArrowOutUpRight
+                size={11}
+                color="black"
+                className="absolute top-[0.35rem] left-[2.75rem]"
+              />
+            ) : null}
           </a>
         </CardDescription>
       </CardHeader>

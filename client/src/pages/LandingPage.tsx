@@ -30,12 +30,12 @@ export default function LandingPage() {
       </div>
       <div className="h-[200vh] w-[80vw] lg:w-[70vw] flex flex-col items-center justify-start bg-white bg-opacity-50 rounded-sm gap-4 p-5">
         {loading ? (
-         <LoaderCircle size={20} className="animate-spin" />
+          <LoaderCircle size={20} className="animate-spin" />
         ) : error ? (
           <p>error getting data</p>
         ) : data ? (
           data.posts.map((post: PostI, i: number) => (
-            <PostCard post={post} key={i}/>
+            <PostCard post={post} key={i} />
           ))
         ) : (
           "holy moly"

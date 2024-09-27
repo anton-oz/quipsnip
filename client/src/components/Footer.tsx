@@ -10,8 +10,7 @@ export default function Footer() {
     },
   ];
   return (
-    <footer className="p-16 flex justify-between items-center text-white footer-gradient bg-opacity-25">
-      <p>footer</p>
+    <footer className="p-16 flex justify-end items-center text-white footer-gradient bg-opacity-25">
       <ul className="flex items-center justify-center gap-4 relative">
         {footerLinks.map((item, i) => (
           <li

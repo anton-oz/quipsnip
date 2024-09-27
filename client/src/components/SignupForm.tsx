@@ -49,7 +49,6 @@ export default function SignupForm() {
   });
 
   async function onSubmit(values: z.infer<typeof signupFormSchema>) {
-    console.log(values);
     if (values.username && values.password) {
       try {
         const { data } = await signup({

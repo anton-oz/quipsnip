@@ -8,9 +8,9 @@ import TokenGenerator from "../utils/auth2";
 
 import { Request, Response } from "express";
 
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-const testGenerator = new TokenGenerator("publicKey");
+const testGenerator = new TokenGenerator();
 
 const resolvers = {
   Query: {

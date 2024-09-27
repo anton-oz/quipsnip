@@ -41,7 +41,6 @@ export default function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    console.log(values);
     if (values.username && values.password) {
       try {
         const { data } = await login({

@@ -14,7 +14,7 @@
 
 - - ( react suspense )
 
-- [ ] set up `.env` and `.env.example`
+- [X] set up `.env` and `.env.example`
 
 - [ ] let user know about cookie usage when they first visit the site ( implement modal )
 

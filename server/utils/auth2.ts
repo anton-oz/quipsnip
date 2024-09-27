@@ -1,13 +1,16 @@
 import jwt from "jsonwebtoken";
 
+import { config } from "dotenv";
+config();
+
 class TokenGenerator {
   private secretOrPrivateKey: string;
   public secretOrPublicKey: string;
   private options?: jwt.SignOptions;
 
-  constructor(secretOrPublicKey: string, options?: jwt.SignOptions) {
-    this.secretOrPrivateKey = process.env.SECRET || "frigofflahey";
-    this.secretOrPublicKey = secretOrPublicKey;
+  constructor(options?: jwt.SignOptions) {
+    this.secretOrPrivateKey = process.env.SECRET || "";
+    this.secretOrPublicKey = process.env.PUB_SECRET || "";
     this.options = options;
   }
 
@@ -21,6 +24,8 @@ class TokenGenerator {
   }
 
   sign(payload: jwt.JwtPayload, signOptions: jwt.SignOptions): string {
+    if (this.secretOrPrivateKey === "" || this.secretOrPublicKey === "")
+      throw new Error("Kerror");
     const jwtSignOptions = Object.assign({}, signOptions, this.options);
     return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
   }
