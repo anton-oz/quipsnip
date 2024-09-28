@@ -117,14 +117,9 @@ const resolvers = {
       const refreshToken = req.cookies.refreshToken;
       if ((typeof refreshToken == "string") === false)
         throw new Error("Unauthorized");
-      const decoded = jwt.decode(refreshToken);
       try {
-        const token /* new token */ = testTokenGenerator.refresh(
-          refreshToken /* checking refresh token before issuing new */
-          // decoded && typeof decoded !== "string"
-          //   ? { jwtid: decoded._id }
-          //   : undefined
-        );
+        const token /* new access token */ =
+          testTokenGenerator.refresh(refreshToken);
         return { token };
       } catch (err: any) {
         throw new Error("thrown error: ", err);

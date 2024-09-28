@@ -9,8 +9,8 @@ interface customJwtPayload extends jwt.JwtPayload {
 }
 
 class TokenGenerator {
-  private secretOrPrivateKey: string;
-  public secretOrPublicKey: string;
+  private readonly secretOrPrivateKey: string;
+  public readonly secretOrPublicKey: string;
   private options?: jwt.SignOptions;
 
   constructor(options?: jwt.SignOptions) {

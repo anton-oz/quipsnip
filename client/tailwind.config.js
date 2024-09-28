@@ -35,23 +35,28 @@ export default {
             opacity: "1",
             filter: "blur(0)",
           },
-          "40%": {
+          "27%": {
             transform: "translateY(0)",
             opacity: "1",
             filter: "blur(0)",
             zIndex: "0",
           },
-          "50%": {
-            transform: "translateY(20%)",
+          "33%": {
+            transform: "translateY(70%)",
             filter: "blur(5px)",
             opacity: "0",
             zIndex: "-10",
           },
-          "90%": {
-            transform: "translateY(-20%)",
+          "66%": {
+            transform: "translateY(-60%)",
             filter: "blur(5px)",
             opacity: "0",
             zIndex: "-10",
+          },
+          "93%": {
+            transform: "translateY(-60%)",
+            opacity: "0",
+            filter: "blur(5p)",
           },
           "100%": {
             transform: "translateY(0)",
@@ -61,27 +66,70 @@ export default {
         },
         textCycle2: {
           "0%": {
-            transform: "translateY(-20%)",
+            transform: "translateY(-60%)",
             filter: "blur(5px)",
             opacity: "0",
           },
-          "40%": {
-            transform: "translateY(-20%)",
+          "27%": {
+            transform: "translateY(-60%)",
             filter: "blur(5px)",
             opacity: "0",
           },
-          "50%": {
+          "33%": {
             transform: "translateY(0)",
             filter: "blur(0)",
             opacity: "1",
           },
-          "90%": {
+          "60%": {
+            transform: "translateY(0)",
+            filter: "blur(0)",
+            opacity: "1",
+          },
+          "63%": {
+            opacity: "0",
+          },
+          "66%": {
+            transform: "translateY(70%)",
+            filter: "blur(5px)",
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "0",
+          },
+        },
+        textCycle3: {
+          "0%": {
+            transform: "translateY(60%)",
+            filter: "blur(5px)",
+            opacity: "0",
+          },
+          "27%": {
+            transform: "translateY(60%)",
+            filter: "blur(5px)",
+            opacity: "0",
+          },
+          "33%": {
+            transform: "translateY(0)",
+            filter: "blur(0)",
+            opacity: "0",
+          },
+          "60%": {
+            transform: "translateY(-60%)",
+            filter: "blur(5px)",
+            opacity: "0",
+          },
+          "66%": {
+            transform: "translateY(0)",
+            filter: "blur(0)",
+            opacity: "1",
+          },
+          "93%": {
             transform: "translateY(0)",
             filter: "blur(0)",
             opacity: "1",
           },
           "100%": {
-            transform: "translateY(20%)",
+            transform: "translateY(60%)",
             filter: "blur(5px)",
             opacity: "0",
           },
@@ -89,8 +137,9 @@ export default {
       },
       animation: {
         slideIn: "slideIn 0.2s ease-in",
-        textCycle: "textCycle 10s ease-in-out infinite",
-        textCycle2: "textCycle2 10s ease-in-out infinite",
+        textCycle: "textCycle 15s ease infinite",
+        textCycle2: "textCycle2 15s ease infinite",
+        textCycle3: "textCycle3 15s ease infinite",
       },
       borderRadius: {
         lg: "var(--radius)",

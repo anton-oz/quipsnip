@@ -17,6 +17,9 @@ export default function TextCycle() {
         <span className="text-gradient inline-block absolute left-[10%] animate-textCycle2">
           Answer
         </span>
+        <span className="text-gradient inline-block absolute left-[10%] animate-textCycle3">
+          Snippet
+        </span>
         ?
       </h1>
       <p className="text-sm sm:text-2xl pt-8 px-12 text-gray-300 relative left-10">
