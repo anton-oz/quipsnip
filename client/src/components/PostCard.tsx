@@ -40,7 +40,7 @@ export default function PostCard({ post }: { post: Post }) {
           submitted by{" "}
           <a
             href={`/profile/${post.user.username}`}
-            className="relative cursor-pointer underline text-zinc-600 hover:text-zinc-800 hover:pl-[0.15rem] transition-all duration-150"
+            className="relative cursor-pointer underline text-zinc-600 hover:text-zinc-800 hover:font-medium transition-all duration-150"
             onMouseEnter={() => setShowArrow(true)}
             onMouseLeave={() => setShowArrow(false)}
           >
@@ -49,7 +49,7 @@ export default function PostCard({ post }: { post: Post }) {
               <SquareArrowOutUpRight
                 size={11}
                 color="black"
-                className="absolute top-[0.35rem] left-[2.75rem]"
+                className="absolute top-[0.35rem] left-[2.65rem]"
               />
             ) : null}
           </a>
