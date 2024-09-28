@@ -1,7 +1,12 @@
 import jwt from "jsonwebtoken";
-
+import { ObjectId } from "mongoose";
 import { config } from "dotenv";
 config();
+
+interface customJwtPayload extends jwt.JwtPayload {
+  _id: ObjectId | string;
+  username: string;
+}
 
 class TokenGenerator {
   private secretOrPrivateKey: string;
@@ -23,7 +28,7 @@ class TokenGenerator {
     );
   }
 
-  sign(payload: jwt.JwtPayload, signOptions: jwt.SignOptions): string {
+  sign(payload: customJwtPayload, signOptions: jwt.SignOptions): string {
     if (this.secretOrPrivateKey === "" || this.secretOrPublicKey === "")
       throw new Error("Kerror");
     const jwtSignOptions = Object.assign({}, signOptions, this.options);

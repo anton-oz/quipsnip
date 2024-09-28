@@ -29,3 +29,14 @@ export const REFRESH_TOKEN = gql`
     }
   }
 `;
+
+export const NEW_POST = gql`
+  mutation Mutation(
+    $user_id: ID!
+    $type: String!
+    $title: String!
+    $editor: String!
+  ) {
+    newPost(user_id: $user_id, type: $type, title: $title, editor: $editor)
+  }
+`;

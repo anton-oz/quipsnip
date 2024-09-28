@@ -12,7 +12,6 @@ lerna-debug.log*
 __pycache__
 .envrc
 *.pem
-.env
 
 .DS_Store
 node_modules
@@ -20,6 +19,8 @@ dist
 dist-ssr
 dev-dist
 *.local
+.env
+
 
 # Editor directories and files
 .vscode/*

@@ -37,6 +37,7 @@ const typeDefs = `#graphql
         signup(username: String!, password: String!): Auth
         refreshToken: Auth
         logout: Boolean
+        newPost(user_id: ID!, type: String!, title: String!, editor: String!): Boolean
     }
 
 `;

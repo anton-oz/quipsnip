@@ -61,6 +61,7 @@ export default function PostCard({ post }: { post: Post }) {
           readOnly
           placeholder={post.code}
           lang="jsx" // TODO: MAKE DYNAMIC LANG
+          feed
         />
       </CardContent>
       {/* 

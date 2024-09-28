@@ -1,159 +1,178 @@
-import { FormEvent, ChangeEvent, useState, useEffect } from "react";
+/*
+    Reworking Post Form
+*/
+
+// import React from "react";
+
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useRef } from "react";
+
+import { Button } from "./ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+
 import MyCodeEditor from "./MyCodeEditor";
 
-import { SquarePlus, ArrowRight } from "lucide-react";
+import { useMutation } from "@apollo/client";
+import { NEW_POST } from "../utils/mutations";
+
+import { useAuthContext } from "../Context/AuthContext";
+
+const codeFormSchema = z.object({
+  user_id: z.string({
+    required_error: "user id required",
+  }),
+  type: z.string({
+    required_error: "select a type of post",
+  }),
+  title: z
+    .string({
+      required_error: "title required",
+    })
+    .regex(/^[a-zA-Z\ \d]+$/, "No Special Characters"),
+  editor: z.union([z.string(), z.instanceof(File)]),
+});
 
 export default function CodeForm() {
-  const [hideCodeEditor] = useState(false);
-  const [allowSubmit, setAllowSubmit] = useState(false);
-  const [formState, setFormState] = useState({
-    type: "Question",
-    postTitle: "",
-    editor: "",
+  const [newPost, { error }] = useMutation(NEW_POST);
+
+  const Auth = useAuthContext();
+
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  const form = useForm<z.infer<typeof codeFormSchema>>({
+    resolver: zodResolver(codeFormSchema),
+    defaultValues: {
+      user_id: "",
+      type: "",
+      title: "",
+      editor: "// enter your code here\n",
+    },
   });
-  const [placeholder, setPlaceholder] = useState("// your code here\n");
+
+  async function onSubmit(values: z.infer<typeof codeFormSchema>) {
+    const profile = Auth?.getProfile();
+    console.log("profile", profile);
+    if (profile) {
+      if ("error" in profile) {
+        throw new Error(profile.error);
+      } else {
+        values.user_id = profile?._id;
+      }
+    } else throw new Error("No Profile Found");
+    if (formRef.current) {
+      console.log(formRef.current);
+      const data = new FormData(formRef.current);
+      // const stringData = JSON.stringify(data.get("editor"));
+      const editorData = data.get("editor");
+      if (editorData) {
+        values.editor = editorData;
+      }
+    }
+    if (values.user_id && values.type && values.title && values.editor) {
+      try {
+        console.log(values);
+        const { data } = await newPost({
+          variables: { ...values },
+        });
+        if (error) return error;
+        if (!Auth) return { error: "error authenticating" };
+        Auth.login(data.login.token);
+      } catch (err) {
+        console.error("thrown: ", err);
+      }
+    }
+  }
 
   const postTypes = ["Question", "Snippet"];
 
-  useEffect(() => {
-    if (formState.postTitle && formState.editor) {
-      setAllowSubmit(true);
-      return () => {
-        setAllowSubmit(false);
-      };
-    }
-  }, [formState.postTitle && formState.editor]);
-
-  const handleFormChange = (e: ChangeEvent<HTMLFormElement>) => {
-    const { name, value } = e.target;
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
-
-  // const submittable = (e: ChangeEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-  //   const val = e.target.value;
-  //   if (val) {
-  //     setAllowSubmit(true);
-  //   } else {
-  //     setAllowSubmit(false);
-  //   }
-  // };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    //
-    //  SAVING THIS CODE IF THERE IS A PROBLEM DISPLAYING POSTS IN FEED
-    //
-    // if (e.currentTarget !== null) {
-    //   const data = new FormData(e.currentTarget);
-    //   console.log(data.get("editor"));
-    //   console.log(formState);
-    // }
-    if (formState.editor && formState.postTitle && formState.type) {
-      console.log(formState);
-
-      setFormState({
-        type: "question",
-        postTitle: "",
-        editor: "",
-      });
-
-      setPlaceholder("// your code here \n");
-      return;
-    }
-    alert("fill out all fields");
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      onChange={handleFormChange}
-      className="flex flex-col items-center justify-start h-full w-full "
-    >
-      {/* Div with heading, post type, and post title */}
-
-      <div className="flex w-full justify-start items-center z-20 bg-bgSecondary border-t border-b-2 border-white">
-        <div className="p-4 flex flex-col justify-center items-center">
-          <h2 className="p-2 text-3xl">New Post</h2>
-        </div>
-        <div className="p-4 w-fit gap-1 flex flex-col items-center justify-center">
-          <label htmlFor="type" className="self-start text-gray-300">
-            Post type
-          </label>
-          <select
-            className="w-fit p-2 rounded-md text-black self-start focus:outline-none hover:scale-[1.025] transition-all duration-200"
-            defaultValue={formState.type}
+    <Form {...form}>
+      <form
+        ref={formRef}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-2/3 space-y-6"
+      >
+        <div className="flex flex-col sm:flex-row justify-start space-x-10 w-full">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem className="w-[50%]">
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="enter your title..." {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is the title of your post
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="type"
-          >
-            {postTypes.map((item, i) => (
-              <option value={item} key={i}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div
-          className={`${
-            hideCodeEditor ? "hidden" : "block"
-          } p-4 w-fit gap-1 flex flex-col items-center justify-center`}
-        >
-          <label htmlFor="postTitle" className="self-start text-gray-300">
-            {`${formState.type} title`}
-          </label>
-          <input
-            type="text"
-            name="postTitle"
-            id="postTitle"
-            placeholder={`Enter your ${formState.type.toLocaleLowerCase()}'s title`}
-            value={formState.postTitle}
-            className="w-96 p-2 rounded-md text-black self-start focus:outline-none hover:scale-[1.01] transition-all duration-200"
+            render={({ field }) => (
+              <FormItem className="w-[20%] min-w-max">
+                <FormLabel>Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a post type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {postTypes.map((item, i) => (
+                      <SelectItem key={i} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormDescription>This is the type of post</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
           />
         </div>
-        {allowSubmit ? (
-          <button type="submit" className="relative">
-            <span
-              className="brutalButton form text-3xl font-medium hover:border-4 hover:border-black"
-              style={{ right: -130, top: -20 }}
-            >
-              Post
-            </span>
-          </button>
-        ) : (
-          ""
-        )}
-      </div>
-      {/* Div with tabs */}
-
-      <div className="top-[5.25rem] w-full flex text-2xl">
-        <h3 className="p-4 bg-bg border-b-2 border-b-white flex items-center gap-2">
-          Tabs <ArrowRight></ArrowRight>
-        </h3>
-        <button
-          type="button"
-          className="bg-main text-white p-2 px-[3em] border-b-2 border-b-white border-r-2 border-r-white border-l-2 border-l-white "
-        >
-          code
-        </button>
-        <button type="button">
-          <SquarePlus
-            size={50}
-            strokeWidth={1}
-            className="hover:scale-[1.05] transition-all duration-200"
-          />
-        </button>
-      </div>
-      {/* code editor */}
-
-      <div className="w-[100vw] flex-grow lg:w-[100vw] ">
-        <MyCodeEditor
-          hidden={hideCodeEditor}
-          lang="jsx"
-          placeholder={placeholder}
+        <FormField
+          control={form.control}
+          name="editor"
+          render={({ field }) => (
+            <MyCodeEditor
+              hidden={false}
+              lang="typescript"
+              placeholder={
+                typeof field.value === "string"
+                  ? field.value
+                  : JSON.stringify(field.value)
+              }
+            />
+          )}
         />
-      </div>
-    </form>
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
 }

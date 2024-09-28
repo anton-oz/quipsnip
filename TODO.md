@@ -14,7 +14,7 @@
 
 - - ( react suspense )
 
-- [X] set up `.env` and `.env.example`
+- - [ ] lazy load importing language files to improve bundle size
 
 - [ ] let user know about cookie usage when they first visit the site ( implement modal )
 

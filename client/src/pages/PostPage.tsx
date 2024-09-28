@@ -3,7 +3,7 @@ import { useAuthContext } from "@/Context/AuthContext";
 export default function PostPage() {
   const Auth = useAuthContext();
   return (
-    <section className="h-full w-full flex justify-center items-center">
+    <section className="h-full w-full flex justify-center items-center bg-bg">
       {Auth?.loggedIn() ? (
         <CodeForm />
       ) : (

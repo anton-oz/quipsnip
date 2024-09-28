@@ -6,6 +6,7 @@ import "prism-react-editor/prism/languages/jsx";
 
 // Adds comment toggling and auto-indenting for JSX
 import "prism-react-editor/languages/jsx";
+import "prism-react-editor/prism/languages/tsx";
 
 import "prism-react-editor/layout.css";
 
@@ -26,6 +27,7 @@ interface Props {
   lang: string;
   placeholder: string;
   readOnly?: boolean;
+  feed?: boolean;
 }
 
 export default function MyCodeEditor({
@@ -33,6 +35,7 @@ export default function MyCodeEditor({
   lang,
   placeholder,
   readOnly,
+  feed,
 }: Props) {
   const codeRef = useRef<PrismEditor | null>(null);
   const [copySuccess, setCopySuccess] = useState(false);
@@ -41,6 +44,7 @@ export default function MyCodeEditor({
     display: hidden ? "none" : "block",
     width: "100%",
     height: "100%",
+    minHeight: feed ? "" : "40vh", // needs to change dyanmically for differnent height on new post and feed
     maxHeight: "40vh",
     padding: "0.75rem",
     backgroundColor: "black",

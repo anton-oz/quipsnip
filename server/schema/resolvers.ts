@@ -10,7 +10,7 @@ import { Request, Response } from "express";
 
 import jwt from "jsonwebtoken";
 
-const testGenerator = new TokenGenerator();
+const testTokenGenerator = new TokenGenerator();
 
 const resolvers = {
   Query: {
@@ -47,6 +47,7 @@ const resolvers = {
     */
   },
   Mutation: {
+    // Auth
     login: async (
       _: void,
       { username, password }: { username: string; password: string },
@@ -63,13 +64,13 @@ const resolvers = {
       const idString = profile._id.toString();
 
       // if it gets here authentication has completed, so a jwt token is signed
-      const token = testGenerator.sign(
+      const token = testTokenGenerator.sign(
         { username, _id: idString },
         { expiresIn: "15m" }
       );
 
       // this token is for issuing new tokens, longer expire time
-      const refreshToken = testGenerator.sign(
+      const refreshToken = testTokenGenerator.sign(
         { username, _id: idString },
         { expiresIn: "1d" }
       );
@@ -91,12 +92,12 @@ const resolvers = {
     ) => {
       const profile = await Profile.create({ username, password });
       if (!profile) throw new Error("Could not create profile");
-      const token = testGenerator.sign(
+      const token = testTokenGenerator.sign(
         { username, _id: profile._id },
         { expiresIn: "15m" }
       );
-      const refreshToken = testGenerator.sign(
-        { username, id: profile._id },
+      const refreshToken = testTokenGenerator.sign(
+        { username, _id: profile._id },
         { expiresIn: "1d" }
       );
       res.cookie("refreshToken", refreshToken, {
@@ -118,7 +119,7 @@ const resolvers = {
         throw new Error("Unauthorized");
       const decoded = jwt.decode(refreshToken);
       try {
-        const token /* new token */ = testGenerator.refresh(
+        const token /* new token */ = testTokenGenerator.refresh(
           refreshToken /* checking refresh token before issuing new */
           // decoded && typeof decoded !== "string"
           //   ? { jwtid: decoded._id }
@@ -128,6 +129,25 @@ const resolvers = {
       } catch (err: any) {
         throw new Error("thrown error: ", err);
       }
+    },
+    // Posts
+    newPost: async (
+      _: void,
+      {
+        type,
+        title,
+        editor,
+        user_id,
+      }: { type: string; title: string; editor: string; user_id: ObjectId }
+    ) => {
+      const newPost = await Post.create({
+        type,
+        title,
+        code: editor,
+        user: user_id,
+      });
+      if (!newPost) throw new Error("Could not create post");
+      return true;
     },
   },
 };

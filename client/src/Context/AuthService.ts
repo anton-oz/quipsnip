@@ -1,10 +1,16 @@
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+
+interface customJwtPayload extends JwtPayload {
+  _id: string;
+  username: string;
+}
 
 export class AuthService {
   getProfile() {
     const token = this.getToken();
     if (!token) return { error: "error getting token" };
-    return jwtDecode(token);
+    const decoded = jwtDecode(token);
+    return decoded as customJwtPayload;
   }
 
   loggedIn() {
