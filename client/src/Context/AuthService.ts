@@ -15,13 +15,13 @@ export class AuthService {
 
   loggedIn() {
     const token = this.getToken();
-    return token && !this.isTokenExpired(token) ? true : false;
+    return token;
   }
 
   isTokenExpired(token: string) {
     const decoded = jwtDecode(token);
-    if (!decoded.exp) return { error: "Authentication Error" };
-    if (decoded.exp < Date.now() / 1000) {
+    // if (!decoded.exp) return { error: "Authentication Error" };
+    if (!decoded.exp || decoded.exp < Date.now() / 1000) {
       localStorage.removeItem("id_token");
       return true;
     }
@@ -37,7 +37,12 @@ export class AuthService {
     window.location.assign("/post");
   }
 
-  async logout() {
+  refresh(token: string) {
+    localStorage.setItem("id_token", token);
+    return this.getToken();
+  }
+
+  logout() {
     localStorage.removeItem("id_token");
     window.location.assign("/");
   }

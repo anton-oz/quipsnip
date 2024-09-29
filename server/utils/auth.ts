@@ -3,7 +3,7 @@ import { ObjectId } from "mongoose";
 import { config } from "dotenv";
 config();
 
-interface customJwtPayload extends jwt.JwtPayload {
+interface CustomJwtPayload extends jwt.JwtPayload {
   _id: ObjectId | string;
   username: string;
 }
@@ -28,18 +28,22 @@ class TokenGenerator {
     );
   }
 
-  sign(payload: customJwtPayload, signOptions: jwt.SignOptions): string {
+  private sign(payload: CustomJwtPayload, signOptions: jwt.SignOptions): string {
     if (this.secretOrPrivateKey === "" || this.secretOrPublicKey === "")
       throw new Error("Kerror");
-    const jwtSignOptions = Object.assign({}, signOptions, this.options);
+    const jwtSignOptions = Object.assign({}, this.options, signOptions);
     return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
   }
 
-  refresh(token: string, refreshOptions?: jwt.VerifyOptions): string {
+  public refresh(
+    token: string,
+    verifyOptions?: jwt.VerifyOptions,
+    refreshOptions?: jwt.SignOptions
+  ): string {
     const payload: string | jwt.JwtPayload | jwt.Jwt = jwt.verify(
       token,
       this.secretOrPrivateKey,
-      refreshOptions
+      verifyOptions
     );
     if (!this.isJwtPayload(payload)) {
       return "{ error: 'invalid payload' }";
@@ -51,6 +55,18 @@ class TokenGenerator {
     const jwtSignOptions = Object.assign({}, this.options, refreshOptions);
     // The first signing converted all needed options into claims, they are already in the payload
     return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
+  }
+
+  public issueTokens(
+    payload: CustomJwtPayload,
+    accessTokenOptions: jwt.SignOptions,
+    refreshTokenOptions: jwt.SignOptions
+  ): { token: string; refreshToken: string } {
+    const accessOptions = Object.assign({}, this.options, accessTokenOptions);
+    const refreshOptions = Object.assign({}, this.options, refreshTokenOptions);
+    const token = this.sign(payload, accessOptions);
+    const refreshToken = this.sign(payload, refreshOptions)
+    return { token, refreshToken };
   }
 }
 

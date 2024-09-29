@@ -4,13 +4,13 @@ import { Post, Profile } from "../models";
 import auth from "../utils/GraphQLError";
 const { AuthenticationError } = auth;
 
-import TokenGenerator from "../utils/auth2";
+import TokenGenerator from "../utils/auth";
 
 import { Request, Response } from "express";
 
 import jwt from "jsonwebtoken";
 
-const testTokenGenerator = new TokenGenerator();
+const testTokenGenerator = new TokenGenerator({ expiresIn: `${10 * 1000}` });
 
 const resolvers = {
   Query: {
@@ -63,23 +63,18 @@ const resolvers = {
 
       const idString = profile._id.toString();
 
-      // if it gets here authentication has completed, so a jwt token is signed
-      const token = testTokenGenerator.sign(
+      const { token, refreshToken } = testTokenGenerator.issueTokens(
         { username, _id: idString },
-        { expiresIn: "15m" }
-      );
-
-      // this token is for issuing new tokens, longer expire time
-      const refreshToken = testTokenGenerator.sign(
-        { username, _id: idString },
-        { expiresIn: "1d" }
+        { expiresIn: "15m" }, // access token options
+        { expiresIn: "3d" } // refresh token options
       );
 
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
-        maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+        maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // expires 3 days from now
       });
 
       // return the token to the user along with profile info
@@ -92,19 +87,20 @@ const resolvers = {
     ) => {
       const profile = await Profile.create({ username, password });
       if (!profile) throw new Error("Could not create profile");
-      const token = testTokenGenerator.sign(
+
+      const { token, refreshToken } = testTokenGenerator.issueTokens(
         { username, _id: profile._id },
-        { expiresIn: "15m" }
+        { expiresIn: "15m" }, // access token options
+        { expiresIn: "3d" } // refresh token options
       );
-      const refreshToken = testTokenGenerator.sign(
-        { username, _id: profile._id },
-        { expiresIn: "1d" }
-      );
+
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
-        maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+        // maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+        maxAge: 20 * 1000, // 1 day
+        expires: new Date(Date.now() + 20 * 1000),
       });
 
       return { token };
@@ -115,14 +111,26 @@ const resolvers = {
     },
     refreshToken: async (_: void, __: void, { req }: { req: Request }) => {
       const refreshToken = req.cookies.refreshToken;
-      if ((typeof refreshToken == "string") === false)
-        throw new Error("Unauthorized");
+      const decoded = jwt.decode(refreshToken);
       try {
-        const token /* new access token */ =
-          testTokenGenerator.refresh(refreshToken);
-        return { token };
+        if (!decoded) return { token: null, success: false };
+        if (typeof decoded !== "string" && decoded?.exp) {
+          const exp = decoded.exp;
+          const currentTime = Date.now() / 1000;
+          if (exp < currentTime) return { token: null, success: false };
+        }
+        const token /* new access token */ = testTokenGenerator.refresh(
+          refreshToken,
+          {},
+          { expiresIn: `${5 * 1000}` }
+        );
+        return { token, success: true };
       } catch (err: any) {
         throw new Error("thrown error: ", err);
+        /*
+          TODO: add error field to return so I can log out user and return the error
+        */
+        return { token: null, success: false };
       }
     },
     // Posts

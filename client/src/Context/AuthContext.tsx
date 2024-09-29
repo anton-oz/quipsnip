@@ -1,28 +1,9 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { ReactNode, createContext, useContext, useEffect } from "react";
 
 import { AuthService } from "./AuthService";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-
 import { ApolloError, useMutation } from "@apollo/client";
 import { LOGOUT_USER, REFRESH_TOKEN } from "../utils/mutations";
-
-import { handleLogout } from "@/lib/utils";
 
 const AuthContext = createContext<AuthService | null>(null);
 
@@ -31,66 +12,30 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const Auth = new AuthService();
 
-  const [viewModal, setViewModal] = useState(false);
-
-  const openModal = () => setViewModal(true);
-  const closeModal = () => setViewModal(false);
-
   const [refreshToken, { error: refreshError }] = useMutation(REFRESH_TOKEN);
   const [logout, { error: logoutError }] = useMutation(LOGOUT_USER);
 
   useEffect(() => {
-    const timeout = 14 * 60 * 1000;
-
+    // interval to auto refresh token in background
+    const interval = 14 * 60 * 1000;
     if (Auth?.loggedIn()) {
-      console.log(Auth.getProfile());
-      setTimeout(() => {
-        openModal();
-
-        setTimeout(() => {
-          const token = Auth.getToken();
-          console.log(token);
-          const expired = token ? Auth.isTokenExpired(token) : true;
-          if (expired) window.location.replace("/");
-        }, 1 * 60 * 1000);
-      }, timeout);
+      const refresher = setInterval(async () => {
+        const refresh = await refreshToken();
+        if (refreshError) throw new ApolloError(refreshError);
+        if (refresh.errors) return console.error(refresh.errors);
+        if (refresh?.data) {
+          if (!refresh.data.refreshToken.success) {
+            console.log(refresh.data.refreshToken.success);
+            await logout();
+            if (logoutError) throw new ApolloError(logoutError);
+            Auth.logout();
+            return clearInterval(refresher);
+          }
+          Auth.refresh(refresh.data.refreshToken.token);
+        }
+      }, interval);
     }
-  }, [Auth.loggedIn()]);
+  }, []);
 
-  return (
-    <AuthContext.Provider value={Auth}>
-      <AlertDialog open={viewModal} onOpenChange={setViewModal}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>You Still There?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Just making sure you're still there. Click "I'm Here" to stay
-              logged in :&#41;.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel
-              onClick={() => {
-                closeModal();
-                handleLogout(logout, logoutError, Auth);
-              }}
-            >
-              Logout
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={async () => {
-                closeModal();
-                await refreshToken();
-                if (refreshError) throw new ApolloError(refreshError);
-              }}
-            >
-              I'm Here
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={Auth}>{children}</AuthContext.Provider>;
 };

@@ -85,7 +85,11 @@ export default function Nav() {
           />
         </button>
         {menuOpen ? (
-          <ul className="z-[10000] w-48 h-[12.33rem]  p-2 absolute right-3 top-[5.5rem] gap-12 flex flex-col items-center justify-start animate-slideIn bg-zinc-300 bg-opacity-80 rounded-lg">
+          <ul
+            className={`z-[10000] w-48 ${
+              loggedIn ? "h-[9.4rem]" : "h-[12.33rem]"
+            } p-2 absolute right-3 top-[5.5rem] gap-12 flex flex-col items-center justify-start animate-slideIn bg-zinc-300 bg-opacity-80 rounded-lg`}
+          >
             {navLinks.map((link, i) =>
               link === "Logout" ? (
                 <li key={i} className="relative w-full">

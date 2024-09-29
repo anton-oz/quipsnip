@@ -7,7 +7,7 @@ export default function PostPage() {
       {Auth?.loggedIn() ? (
         <CodeForm />
       ) : (
-        <a href="/" className="relative w-full">
+        <a href="/login" className="relative w-full">
           <span className="brutalButtonMiddle">Login to view</span>
         </a>
       )}

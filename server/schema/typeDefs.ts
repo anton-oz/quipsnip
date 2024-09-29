@@ -7,8 +7,9 @@ const typeDefs = `#graphql
     }
 
     type Auth {
-        token: ID!
+        token: ID
         # profile: Profile!
+        success: Boolean
     }
 
     type Post {
@@ -35,7 +36,7 @@ const typeDefs = `#graphql
     type Mutation {
         login(username: String!, password: String!): Auth
         signup(username: String!, password: String!): Auth
-        refreshToken: Auth
+        refreshToken: Auth 
         logout: Boolean
         newPost(user_id: ID!, type: String!, title: String!, editor: String!): Boolean
     }

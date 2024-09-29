@@ -26,6 +26,7 @@ export const REFRESH_TOKEN = gql`
   mutation RefreshToken {
     refreshToken {
       token
+      success
     }
   }
 `;
