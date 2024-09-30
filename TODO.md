@@ -8,6 +8,10 @@
 
 ### TODO FOR MVP
 
+- [ ] write tests for token generator
+
+- - make sure tokens are issued properly, set up tests for express req + res on mutation resolvers
+
 - [ ] implement lazy loading for smaller bundle size
 
 - - only loads neccesary modules depending on where in the page you are

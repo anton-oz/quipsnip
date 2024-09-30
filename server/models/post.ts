@@ -8,6 +8,7 @@ interface PostInterface {
   type: string;
   title: string;
   code: string;
+  createdAt: Date;
   comments: [CommentInterface];
 }
 
@@ -31,6 +32,11 @@ const postSchema = new Schema<PostInterface>({
     type: String,
     required: true,
     unique: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    required: true,
   },
   comments: [commentSchema],
 });

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-export default function TextCycle() {
+interface Props {
+  className?: string;
+}
+
+export default function TextCycle(props?: Props) {
   const [showLetterN, setShowLetterN] = useState(false);
 
   useEffect(() => {
@@ -9,7 +13,11 @@ export default function TextCycle() {
     }, 4000);
   }, []);
   return (
-    <div className=" px-12 py-16 flex flex-col items-center justify-center rounded-xl">
+    <div
+      className={`px-12 py-16 flex flex-col items-center justify-center rounded-xl ${
+        props?.className ? props.className : null
+      }`}
+    >
       <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold text-left relative">
         <span className="text-gradient inline-block animate-textCycle">
           Question

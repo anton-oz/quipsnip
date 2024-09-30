@@ -74,16 +74,11 @@ export default function MyCodeEditor({
 
   return (
     <div className="relative">
-      <div className="absolute top-3 right-0 z-50 m-1 mr-4 p-1 border border-zinc-100 bg-black rounded cursor-pointer transtion-all duration-150">
+      <div className="absolute top-3 right-0 z-50 m-1 mr-4 p-1 border border-zinc-100 bg-black rounded cursor-pointer hover:scale-105 transtion-all duration-150">
         {copySuccess ? (
           <Check size={20} color="white" />
         ) : (
-          <Copy
-            size={20}
-            color="white"
-            onClick={copyToClipboard}
-            className="hover:scale-105 transtion-all duration-150"
-          />
+          <Copy size={20} color="white" onClick={copyToClipboard} />
         )}
       </div>
       <Editor

@@ -40,7 +40,7 @@ export default function PostCard({ post }: { post: Post }) {
           submitted by{" "}
           <a
             href={`/profile/${post.user.username}`}
-            className="relative cursor-pointer underline text-zinc-600 hover:text-zinc-800 hover:font-medium transition-all duration-150"
+            className="relative cursor-pointer underline text-zinc-600 hover:text-zinc-800 transition-all duration-150"
             onMouseEnter={() => setShowArrow(true)}
             onMouseLeave={() => setShowArrow(false)}
           >

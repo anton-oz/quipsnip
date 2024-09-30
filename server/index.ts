@@ -21,7 +21,7 @@ const corsConfig = {
 };
 app.use(cors(corsConfig));
 
-interface Context {
+export interface Context {
   req: Request;
   res: Response;
 }
@@ -29,10 +29,6 @@ interface Context {
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-  // context: ({ req, res }: { req: Request; res: Response }) => ({
-  //   req: Request,
-  //   res: Response,
-  // }),
 });
 
 async function startApolloServer() {
@@ -43,13 +39,14 @@ async function startApolloServer() {
       context: async ({ req, res }): Promise<Context> => ({ req, res }),
     })
   );
-  // connecting to mongoDB
   await connection;
-
   app.listen(PORT, () => {
     console.log(`graphql @ http://localhost:${PORT}/graphql`);
     console.log(`running @ http://localhost:${PORT}`);
   });
+  return { server: app };
 }
 
 startApolloServer();
+
+export default app;
